@@ -25,6 +25,37 @@
     <link rel="stylesheet" href="hostza-master/css/slicknav.css">
     <link rel="stylesheet" href="hostza-master/css/style.css">
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+    <!--Jquery -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <style>
+
+        .modal-dialog,
+        .modal-content{
+            height: 98%;
+        }
+
+        .modal-body{
+            overflow-y:scroll;
+        }
+
+        .modal-backdrop {
+            z-index: -1;
+        }
+
+        tbody td {
+            font-size: 70%;
+            cursor:pointer;
+        }
+        thead th{
+            font-size:70%;
+        }
+    </style>
+        
 </head>
 
 <body>
@@ -103,9 +134,9 @@
                             <p>The Best Domain & Hosting Provider In The Area</p>
                             <h3>Go Big with your next Domain</h3>
                             <div class="find_dowmain">
-                                <form action="#" class="find_dowmain_form">
-                                    <input type="text" placeholder="Find your domain">
-                                    <button type="submit">search</button>
+                                <form class="find_dowmain_form">
+                                    <input id="files" type="file" accept=".csv" required placeholder="Find your domain">
+                                    <button id="submit-file" type="submit">Preview File</button>
                                 </form>
                             </div>
                         </div>
@@ -113,6 +144,39 @@
                 </div>
             </div>
         </div>
+    </div>
+
+
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+
+        </div>  
+      </div>
+      <div class="modal-footer">
+        <form action="" method="post">
+            @csrf
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success">Proceed to Pay</button>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+    <div id="parsed_csv_list">
+
     </div>
     <!-- slider_area_end -->
 
@@ -768,6 +832,62 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <!-- form itself end -->
 
 
+    <script>
+
+        $(document).ready(function(){ 
+            $('#submit-file').on("click", function(e){
+                e.preventDefault();
+
+                $('#files').parse({
+                config:{
+                    delimiter: "",
+                    header:false,
+                    complete: displayHTMLTable,
+                },
+                before: function(file, inputElement){
+
+                },
+                error:function(err, file){
+
+                },
+                complete:function(){
+
+                }
+                })  
+            }) 
+           
+        });  
+      
+
+    function displayHTMLTable(results){
+       var table = "<table class='table table-bordered table-responsive table-hover'>";
+       var data = results.data;
+
+       for(i=0; i<data.length; i++){
+            table+="<tr>";
+            var row =data[i];
+            var cells = row.join(",").split(",");
+
+            for(j=0; j<cells.length;j++){
+                table+= "<td>";
+                table+=cells[j];
+                table+="</th>";
+            }
+
+            table+="</tr>";
+       }
+       table+="</table>";
+
+       $(".table-responsive").html(table);
+       $('#exampleModal').modal("show");
+    }
+
+
+
+    </script>
+
+
+
     <!-- JS here -->
     <script src="hostza-master/js/vendor/modernizr-3.5.0.min.js"></script>
     <script src="hostza-master/js/vendor/jquery-1.12.4.min.js"></script>
@@ -794,8 +914,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="hostza-master/js/jquery.form.js"></script>
     <script src="hostza-master/js/jquery.validate.min.js"></script>
     <script src="hostza-master/js/mail-script.js"></script>
-
     <script src="hostza-master/js/main.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js" integrity="sha512-SGWgwwRA8xZgEoKiex3UubkSkV1zSE1BS6O4pXcaxcNtUlQsOmOmhVnDwIvqGRfEmuz83tIGL13cXMZn6upPyg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+     
 </body>
+
 
 </html>
