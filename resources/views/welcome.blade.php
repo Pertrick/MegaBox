@@ -1,8 +1,9 @@
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="en">
 
 <head>
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Mega Box</title>
     <meta name="description" content="">
@@ -33,6 +34,28 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
     <style>
+
+        .overlay{
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            background: rgba(255,245,245,0.5) url(hostza-master/img/Spinner-1s-200px.gif) center no-repeat;
+        }
+        body{
+            text-align: center;
+        }
+        /* Turn off scrollbar when body element has the loading class */
+        body.loading{
+            overflow: hidden;   
+        }
+        /* Make spinner image visible when body element has the loading class */
+        body.loading .overlay{
+            display: block;
+        }
 
         .modal-dialog,
         .modal-content{
@@ -168,7 +191,7 @@
         <form action="" method="post">
             @csrf
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-success">Proceed to Pay</button>
+            <input type="submit" id="proceed-to-pay" class="btn btn-success" value="Proceed to Pay"/>
         </form>
         
       </div>
@@ -834,6 +857,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
     <script>
 
+
         $(document).ready(function(){ 
             $('#submit-file').on("click", function(e){
                 e.preventDefault();
@@ -845,22 +869,54 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                     complete: displayHTMLTable,
                 },
                 before: function(file, inputElement){
-
+                    console.log('entering before');
+                    $("body").addClass("loading");  
                 },
                 error:function(err, file){
 
                 },
                 complete:function(){
-
+                    console.log('entering complete'); 
+                          
+                    $("body").removeClass("loading");                      
                 }
                 })  
             }) 
+
+            $('#proceed-to-pay').click( function(e){
+                e.preventDefault();
+                console.log(ConvertToJson());
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{route('data.store')}}",
+                    dataType : 'JSON',
+                    data : {'data' : ConvertToJson()},
+
+                    success: function(response){
+                        console.log(response);
+                    },
+                    error: function(response){
+                        console.log(response);
+
+                    }
+
+                })
+                ;
+            });
+
            
         });  
       
 
     function displayHTMLTable(results){
-       var table = "<table class='table table-bordered table-responsive table-hover'>";
+       var table = "<table class='table table-bordered table-responsive table-hover' id='tblData'>";
        var data = results.data;
 
        for(i=0; i<data.length; i++){
@@ -883,6 +939,30 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     }
 
 
+    function ConvertToJson() {
+      
+        var table = document.getElementById("tblData");
+        console.log(table);
+
+        var header = [];
+        var rows = [];
+ 
+        for (var i = 0; i < table.rows[0].cells.length; i++) {
+            header.push(table.rows[0].cells[i].innerHTML);
+        }
+ 
+        for (var i = 1; i < table.rows.length; i++) {
+            var row = {};
+            for (var j = 0; j < table.rows[i].cells.length; j++) {
+                row[header[j]] = table.rows[i].cells[j].innerHTML;
+            }
+            rows.push(row);
+        }
+
+        
+        return JSON.stringify(rows);
+       
+    }
 
     </script>
 
@@ -919,7 +999,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js" integrity="sha512-SGWgwwRA8xZgEoKiex3UubkSkV1zSE1BS6O4pXcaxcNtUlQsOmOmhVnDwIvqGRfEmuz83tIGL13cXMZn6upPyg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-     
+    <div class="overlay"></div>
 </body>
 
 
