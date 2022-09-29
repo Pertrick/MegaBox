@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AirtimeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +17,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+//for airtime
+Route::get('airtime', function (){
+return view('airtime.index');
+})->name('airtime');
+
+Route::any('prev', [AirtimeController::class, 'preview'])->name('prev');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Route::post('preview', [AirtimeController::class, 'index'])->name('preview');
