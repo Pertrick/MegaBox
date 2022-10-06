@@ -24,6 +24,8 @@ return view('airtime.index');
 
 Route::any('prev', [AirtimeController::class, 'preview'])->name('prev');
 
+Route::post('make-payment', [DataController::class, 'store'])->name('data.store');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
