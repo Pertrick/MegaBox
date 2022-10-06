@@ -28,6 +28,9 @@
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
     <!--Jquery -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -57,12 +60,12 @@
             display: block;
         }
 
-        .modal-dialog,
-        .modal-content{
-            height: 98%;
+       #exampleModal .modal-dialog,
+       #exampleModal .modal-content{
+            height: 90;
         }
 
-        .modal-body{
+        #exampleModal .modal-body{
             overflow-y:scroll;
         }
 
@@ -70,6 +73,7 @@
             z-index: -1;
         }
 
+       
         tbody td {
             font-size: 70%;
             cursor:pointer;
@@ -174,7 +178,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
@@ -188,19 +192,37 @@
         </div>  
       </div>
       <div class="modal-footer">
-        <form action="" method="post">
-            @csrf
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-            <input type="submit" id="proceed-to-pay" class="btn btn-success" value="Proceed to Pay"/>
-        </form>
+        
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button type="button" id="collect-user-email" class="btn btn-success">Proceed</button>
         
       </div>
     </div>
   </div>
 </div>
-    <div id="parsed_csv_list">
 
+<!--Payment Modal -->
+<div class="modal" id="paymentModal" tabindex="-1" role="dialog" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center">Enter your e-mail</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form action="" method="post">
+            @csrf
+            <input type="email" id="email"  name="email" placeholder="Email"/>
+
+            <input type="submit" id="proceed-to-pay" class="btn btn-success" value="Proceed to Pay"/>
+        </form> 
+      </div>
     </div>
+  </div>
+</div>
+
     <!-- slider_area_end -->
 
     <!-- prising_area_start -->
@@ -883,24 +905,45 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 })  
             }) 
 
+
+            $('#collect-user-email').click( function(e){
+                 $('#exampleModal').modal("hide");
+                $('#paymentModal').modal("show");
+            });
+
+
             $('#proceed-to-pay').click( function(e){
                 e.preventDefault();
-                console.log(ConvertToJson());
 
+                
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
 
+                const email = $('#email').val();
+                const data = JSON.stringify(convertToJson());
+
                 $.ajax({
                     type: "POST",
                     url: "{{route('data.store')}}",
                     dataType : 'JSON',
-                    data : {'data' : ConvertToJson()},
+                    data : {
+                        'data' : data,
+                        'email': email
+                    },
 
                     success: function(response){
-                        console.log(response);
+                        if(response.success === 0){
+                            // $('#paymentModal').modal("hide");
+                            Swal.fire(
+                                'Data Uploaded Successfully!',
+                                'success'
+                            )
+
+                            window.location = 'http://localhost:8000/'
+                        }
                     },
                     error: function(response){
                         console.log(response);
@@ -939,7 +982,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     }
 
 
-    function ConvertToJson() {
+    function convertToJson() {
       
         var table = document.getElementById("tblData");
         console.log(table);
@@ -960,8 +1003,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         }
 
         
-        return JSON.stringify(rows);
+        return rows;
        
+    }
+
+
+    function collectUserEmail(){
+
     }
 
     </script>
