@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('data', function (Blueprint $table) {
+        Schema::create('datas', function (Blueprint $table) {
             $table->id();
             $table->string('phone_number');
             $table->string('network');
             $table->string('amount');
-            $table->boolean('status');
+            $table->string('status');
             $table->string('uploaded_by');
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('data');
+        Schema::dropIfExists('datas');
     }
 };

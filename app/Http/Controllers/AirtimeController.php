@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\csvfile;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 
 class AirtimeController extends Controller
 {

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DataController;
 use App\Http\Controllers\AirtimeController;
 
 /*
@@ -16,13 +17,13 @@ use App\Http\Controllers\AirtimeController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 //for airtime
 Route::get('airtime', function (){
 return view('airtime.index');
 })->name('airtime');
 
-Route::any('prev', [AirtimeController::class, 'preview'])->name('prev');
+Route::any('prev', [AirtimeController::class, 'test'])->name('prev');
 
 Route::post('make-payment', [DataController::class, 'store'])->name('data.store');
 
