@@ -35,34 +35,7 @@ class DataController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'email' => ['required', 'string'],
-            'data' => ['required', 'json'],
-        ]);
-
-        $uploadedData = Json_decode($request->data);
-
-        $email = $request->email;
-
-        $count = count($uploadedData);
-        foreach($uploadedData as $value){
-            $data = new Data();
-            $data->phone_number = $value->phone_number;
-            $data->network = $value->network;
-            $data->amount = $value->amount;
-            $data->status = false;
-            $data->uploaded_by = $email;
-
-            if($data->save()){
-                $count--;
-            }
-        }
-
-        if($count == 0){
-            return response()->json(['success' => $count]);
-        }
-
-       
+        
     }
 
     /**
