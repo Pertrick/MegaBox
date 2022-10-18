@@ -70,17 +70,15 @@
         }
 
         .modal-backdrop {
-            z-index: -1;
+            opacity:0.5 !important;
         }
 
        
         tbody td {
-            font-size: 70%;
             cursor:pointer;
+            color:black;
         }
-        thead th{
-            font-size:70%;
-        }
+       
     </style>
         
         {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
@@ -157,11 +155,17 @@
     <div class="slider_area">
         <div class="single_slider d-flex align-items-center justify-content-center slider_bg_1 overlay2">
             <div class="container">
+            @if(session('message'))
+                      <div class="alert alert-success my-2 mx-4">
+                          <button type="button" class="close" data-dismiss="alert">x</button>
+                          <div class="text-center">{{ session('message') }}</div>
+                      </div>
+                  @endif
                 <div class="row align-items-center justify-content-center">
                     <div class="col-xl-9">
                         <div class="slider_text text-center">
-                            <p>The Best Domain & Hosting Provider In The Area</p>
-                            <h3>Go Big with your next Domain</h3>
+                            <p>The Best Data and Airtime Provider In The Area</p>
+                            <h3 style="font-size:300%;">Go Big with your next Data Or Airtime</h3>
                             <div class="find_dowmain">
                                 <form class="find_dowmain_form">
                                     <input id="files" type="file" accept=".csv" required placeholder="Find your domain">
@@ -179,11 +183,11 @@
 <!-- Button trigger modal -->
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-lg modal-dialog-centered " role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">File Content</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -204,8 +208,8 @@
 </div>
 
 <!--Payment Modal -->
-<div class="modal" id="paymentModal" tabindex="-1" role="dialog" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal" id="paymentModal" tabindex="-1" role="dialog" tabindex="-1" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title text-center">Enter your E-mail</h5>
@@ -214,11 +218,13 @@
         </button>
       </div>
       <div class="modal-body">
-      <form action="" method="post">
+      <form action="" method="post" class="form-inline" style="width:50%; margin:1px auto;">
             @csrf
-            <input type="email" id="email"  name="email" placeholder="Email"/>
-
-            <input type="submit" id="proceed-to-pay" class="btn btn-success" value="Proceed to Pay"/>
+            <div class="form-group mx-sm-3 mb-2">
+            <input type="email" id="email" class="form-control" name="email" placeholder="Email" required/>
+             </div>
+           
+            <input type="submit" id="proceed-to-pay" class="btn btn-success" value="Make Payment"/>
         </form> 
       </div>
     </div>
@@ -913,7 +919,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 $('#paymentModal').modal("show");
             });
 
-
             $('#proceed-to-pay').click( function(e){
                 e.preventDefault();
 
@@ -926,18 +931,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
                 const email = $('#email').val();
                 const data = JSON.stringify(convertToJson());
-
-                $.ajax({
+                if(validateEmail(email)){
+                    $.ajax({
                     type: "POST",
-                    url: "{{route('data.store')}}",
+                    url: "{{route('payment.checkout')}}",
                     dataType : 'JSON',
                     data : {
-                        'data' : data,
-                        'email': email
+                        'email': email,
+                        'data': data
                     },
 
-                    success: function(response){
-                        if(response.success === 0){
+                    success: function(payout_link){
                             // $('#paymentModal').modal("hide");
                             // Swal.fire(
                             //     'Data Uploaded Successfully!',
@@ -947,22 +951,27 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
                              window.location = 'http://localhost:8000/'
                         }
+                            console.log(payout_link);
+                            window.location = payout_link;
+                        
                     },
                     error: function(response){
                         console.log(response);
 
                     }
 
-                })
-                ;
+                    });
+                }else{
+                     Swal.fire(
+                                'invalid Email',
+                            )
+                }
             });
-
-           
         });  
       
 
     function displayHTMLTable(results){
-       var table = "<table class='table table-bordered table-responsive table-hover' id='tblData'>";
+       var table = "<table class='table table-bordered table-hover' id='tblData' style='width:100%; margin:0 auto;'>";
        var data = results.data;
 
        for(i=0; i<data.length; i++){
@@ -1011,10 +1020,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     }
 
 
-    function collectUserEmail(){
-
+    function validateEmail(email) {
+        const res = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return res.test(String(email).toLowerCase());
     }
-
     </script>
 
 

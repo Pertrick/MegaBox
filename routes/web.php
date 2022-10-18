@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\AirtimeController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,10 @@ return view('airtime.index');
 Route::any('prev', [AirtimeController::class, 'test'])->name('prev');
 
 Route::post('make-payment', [DataController::class, 'store'])->name('data.store');
+
+//payment
+Route::post('payment/checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
+Route::get('/verify', [PaymentController::class, 'verifyPayment'])->name('payment.verify');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
