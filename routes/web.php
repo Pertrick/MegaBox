@@ -30,6 +30,7 @@ Route::post('make-payment', [DataController::class, 'store'])->name('data.store'
 
 //payment
 Route::post('payment/checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
+
 Route::get('/verify', [PaymentController::class, 'verifyPayment'])->name('payment.verify');
 
 Route::get('/dashboard', function () {
