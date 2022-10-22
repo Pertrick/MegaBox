@@ -298,18 +298,21 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                var type = "";
-                if($('#data').prop('checked',true)){
-                     type = "data";
-                }else{
-                    type = 'airtime';
+                var type;
+               
+                if($('#data').prop("checked")){
+                     type = $('#data').val();
+                }else if($('#airtime').prop("checked")){
+                    type = $('#airtime').val();
                 }
+
+                console.log(type);
                 
                 const email = $('#email').val();
                 
                 const airtime = $('#airtime').val();
                 const data = JSON.stringify(convertToJson());
-                if (validateEmail(email)) {
+                if (validateEmail(email) && type !== undefined || null) {
                     $.ajax({
                         type: "POST",
                         url: "{{ route('payment.checkout') }}",
@@ -331,7 +334,7 @@
                     });
                 } else {
                     Swal.fire(
-                        'invalid Email',
+                        'Error', 'Invalid Email Or Service Type',
                     )
                 }
             });
