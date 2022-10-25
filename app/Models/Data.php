@@ -10,7 +10,7 @@ class Data extends Model
     use HasFactory;
 
     public function saveData($data,$email, $type){
-            $this->phone_number = $data['phone_number'];
+            $this->phone_number = $data['phone'];
             $this->network = $data['network'];
             $this->amount = $data['amount'];
             $this->status = false;

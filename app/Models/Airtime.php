@@ -14,12 +14,12 @@ class Airtime extends Model
         'network',
         'amount',
         'status',
-        'type',
         'uploaded_by',
     ];
 
     public function saveAirtime($airtime,$email, $type){
-        $this->phone_number = $airtime['phone_number'];
+        dd($airtime['phone']);
+        $this->phone_number = $airtime['phone'];
         $this->network = $airtime['network'];
         $this->amount = $airtime['amount'];
         $this->status = false;
