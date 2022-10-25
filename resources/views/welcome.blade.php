@@ -247,7 +247,7 @@
                             <input type="email" id="email" class="form-control" name="email"
                                 placeholder="Email" required />
                         </div>
-                        <p><strong>WHAT ARE YOU BUYING FROM US</strong></p>
+                        <p><strong>WHAT ARE YOU BUYING FROM US?</strong></p>
                         <div id="radio" class="mb-5">
                             <input type="radio" id="data" name="type" value="data" class="pe-5 pl-5">
                             <label for="data" class="pr-5">DATA</label>
@@ -306,8 +306,6 @@
                     type = $('#airtime').val();
                 }
 
-                // console.log(type);
-                
                 const email = $('#email').val();
                 
                 const airtime = $('#airtime').val();
@@ -323,9 +321,8 @@
                             'data': data
                         },
                         success: function(payout_link) {
-                            // $('#paymentModal').modal("hide");
                             console.log(payout_link);
-                            window.location = payout_link;
+                            window.location = payout_link;                
 
                         },
                         error: function(response) {
@@ -333,8 +330,11 @@
                         }
                     });
                 } else {
-                    Swal.fire(
-                        'Error', 'Invalid Email Or Service Type',
+                        Swal.fire({
+                                title:"Invalid email or service type!",
+                                icon: "error",
+                                button:"close"
+                            }
                     )
                 }
             });
