@@ -306,7 +306,7 @@
                     type = $('#airtime').val();
                 }
 
-                console.log(type);
+                // console.log(type);
                 
                 const email = $('#email').val();
                 
