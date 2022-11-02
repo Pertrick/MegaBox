@@ -46,20 +46,9 @@
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a class="active" href="#">home</a></li>
-                                        <li><a href="{{ route('airtime') }}">Airtime</a></li>
-                                        <li><a href="#">Data <i class="ti-angle-down"></i></a>
-                                            <ul class="submenu">
-                                                <li><a href="blog.html">blog</a></li>
-                                                <li><a href="single-blog.html">single-blog</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">pages <i class="ti-angle-down"></i></a>
-                                            <ul class="submenu">
-                                                <li><a href="elements.html">elements</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="Support.html">Support</a></li>
+                                        <li><a class="active" href="{{ url('/') }}">home</a></li>
+                                        <li><a href="{{ route('listairt') }}">Airtime</a></li>
+                                       <li><a href="Support.html">Data<i class="ti-angle-down"></i></a></li>
                                         <li><a href="about.html">About</a></li>
                                         <li><a href="contact.html">Contact</a></li>
                                     </ul>
@@ -72,12 +61,12 @@
                                     <i class="flaticon-user"></i>
                                     <span>log in</span>
                                 </a>
-                                <div class="live_chat_btn">
+                                {{-- <div class="live_chat_btn">
                                     <a class="boxed_btn_green" href="#">
                                         <i class="flaticon-chat"></i>
                                         <span>Live Chat</span>
                                     </a>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="col-12">

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\AirtimeController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,6 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::post('preview', [AirtimeController::class, 'index'])->name('preview');
+//for displaying list of airtime and data
+Route::get('listairt', [ServiceController::class, 'airtime'])->name('listairt');
+

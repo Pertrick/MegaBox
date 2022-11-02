@@ -1,3 +1,5 @@
+@extends('layouts.navbar')
+
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -110,7 +112,7 @@
         <![endif]-->
 
     <!-- header-start -->
-    <header>
+    {{-- <header>
         <div class="header-area ">
             <div id="sticky-header" class="main-header-area">
                 <div class="container-fluid p-0">
@@ -121,26 +123,15 @@
                                     <img src="hostza-master/img/logo.png" alt="">
                                 </a>
                             </div> --}}
-                        </div>
+                        {{-- </div>
                         <div class="col-xl-7 col-lg-7">
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
                                         <li><a class="active" href="#">home</a></li>
                                         <li><a href="{{ route('airtime') }}">Airtime</a></li>
-                                        {{-- <li><a href="#">Data <i class="ti-angle-down"></i></a>
-                                            <ul class="submenu">
-                                                <li><a href="blog.html">blog</a></li>
-                                                <li><a href="single-blog.html">single-blog</a></li>
-                                            </ul>
-                                        </li> --}}
-                                        {{-- <li><a href="#">pages <i class="ti-angle-down"></i></a>
-                                            <ul class="submenu">
-                                                <li><a href="elements.html">elements</a></li>
-                                            </ul>
-                                        </li> --}}
+                                     
                                         <li><a href="#">Data</a></li>
-                                        {{-- <li><a href="Support.html">Support</a></li> --}}
                                         <li><a href="#">About</a></li>
                                         <li><a href="#">Contact</a></li>
                                     </ul>
@@ -153,12 +144,6 @@
                                     <i class="flaticon-user"></i>
                                     <span>log in</span>
                                 </a>
-                                {{-- <div class="live_chat_btn">
-                                    <a class="boxed_btn_green" href="#">
-                                        <i class="flaticon-chat"></i>
-                                        <span>Live Chat</span>
-                                    </a>
-                                </div> --}}
                             </div>
                         </div>
                         <div class="col-12">
@@ -168,7 +153,7 @@
                 </div>
             </div>
         </div>
-    </header>
+    </header>  --}}
     <!-- header-end -->
 
     <!-- slider_area_start -->
