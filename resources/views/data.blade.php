@@ -1,3 +1,4 @@
+
 @extends('layouts.navbar');
 <!doctype html>
 <html class="no-js" lang="en">
@@ -25,8 +26,8 @@
     <link rel="stylesheet" href="hostza-master/css/gijgo.css">
     <link rel="stylesheet" href="hostza-master/css/animate.css">
     <link rel="stylesheet" href="hostza-master/css/slicknav.css">
-    {{-- <link rel="stylesheet" href="hostza-master/css/style.css"> --}}
-    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+    <link rel="stylesheet" href="hostza-master/css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <!--Jquery -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
@@ -49,21 +50,21 @@
             background: rgba(255, 245, 245, 0.5) url(hostza-master/img/Spinner-1s-200px.gif) center no-repeat;
         } */
 
-        body {
+        /* * {
             background: rgba(255, 245, 245, 0.5) url(hostza-master/img/Spinner-1s-200px.gif) center no-repeat;
-        }
+        } */
 
         /* Turn off scrollbar when body element has the loading class */
-        /* body.loading {
+        body.loading {
             overflow: hidden;
-        } */
+        }
 
         /* Make spinner image visible when body element has the loading class */
-        /* body.loading .overlay {
+        body.loading .overlay {
             display: block;
-        } */
+        }
 
-        /* #exampleModal .modal-dialog,
+        #exampleModal .modal-dialog,
         #exampleModal .modal-content {
             height: 90;
         }
@@ -98,32 +99,12 @@
         #radio.input {
             padding-left: 10px;
 
-        } */
-
-        .container {
-            display: flex;
-            flex-direction: row;
-            gap: 80px;
-
         }
 
-        .airtime {
-            margin-right: 100px;
-            /* background-color: light green; */
-
-        }
 
         table {
-            background-color: light green;
-           
+            margin-bottom: 300px;
         }
-        .data{
-             margin-top:3000px;"
-        }
-
-        /* table{
-            overflow: hidden;
-        } */
     </style>
 
     <!-- {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}} -->
@@ -142,73 +123,26 @@
 
                 <div class="row">
                     <div class="col-xl-9">
-                        <div class="slider_text">
+                        <div class="">
+
                             <div class="container">
-                                <div class="airtime">
-                                    <table class="table table-striped">
-                                        <h1 class="text-white mb-5">LIST OF AIRTIMES</h1>
-                                        <thead>
-                                            <tr>
-                                                <!-- <th scope="col"></th> -->
-                                                <th scope="col" class="text-white">Network</th>
-                                                <th scope="col" class="text-white">Discount</th>
-                                                <th scope="col" class="text-white">Server</th>
-                                                <th scope="col" class="text-white">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
 
-                                            <!-- <th scope="row">1</th> -->
-                                            @foreach ($airtime as $airt)
-                                                <tr>
-                                                    <td class="text-white">{{ $airt['network'] }}</td>
-                                                    <td class="text-white">{{ $airt['discount'] }}</td>
-                                                    <td class="text-white">{{ $airt['server'] }}</td>
-                                                    <td class="text-white">{{ $airt['status'] }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
                                 <div class="data">
-                                    <table class="table table-striped" >
-                                        <h1 class="text-white">LIST OF DATA</h1>
-                                        <thead>
-                                            <tr>
-                                                <!-- <th scope="col"></th> -->
-                                                <th scope="col" class="text-white">Type</th>
-                                                <th scope="col" class="text-white">Name</th>
-                                                <th scope="col" class="text-white">Code</th>
-                                                <th scope="col" class="text-white">Amount</th>
-                                                <th scope="col" class="text-white">Discount</th>
-                                                <th scope="col" class="text-white">Status</th>
-                                                <th scope="col" class="text-white">Server</th>
-                                                <th scope="col" class="text-white">Product Code</th>
-                                                <th scope="col" class="text-white">Network</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            <!-- <th scope="row">1</th> -->
-                                            @foreach ($data as $datas)
-                                                <tr>
-                                                    <td class="text-white">{{ $datas['type'] }}</td>
-                                                    <td class="text-white">{{ $datas['name'] }}</td>
-                                                    <td class="text-white">{{ $datas['code'] }}</td>
-                                                    <td class="text-white">{{ $datas['amount'] }}</td>
-                                                    <td class="text-white">{{ $datas['discount'] }}</td>
-                                                    <td class="text-white">{{ $datas['status'] }}</td>
-                                                    <td class="text-white">{{ $datas['server'] }}</td>
-                                                    <td class="text-white">{{ $datas['product_code'] }}</td>
-                                                    <td class="text-white">{{ $datas['network'] }}</td>
-                                                </tr>
-                                            @endforeach
-
-
-
-                                        </tbody>
-                                    </table>
-
+                                    {{-- <div class="row align-items-center justify-content-center"> --}}
+                                    {{-- <div class="col-xl-9"> --}}
+                                    <div class="slider_text text-center">
+                                        <p>Please kindly scroll down to see the list of data we have</p>
+                                        <h3 style="font-size:200%; padding-top:100px;">Go Big with your next Data</h3>
+                                        <div class="find_dowmain" style="padding-bottom:150px;">
+                                            <form class="find_dowmain_form">
+                                                <input id="files" type="file" accept=".csv" required
+                                                    placeholder="Find your domain">
+                                                <button id="submit-file" type="submit">Preview File</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    {{-- </div> --}}
+                                    {{-- </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -216,6 +150,45 @@
                 </div>
             </div>
         </div>
+
+        <table class="table table-striped slider_bg_1 overlay2">
+            <h1 class="text-white">LIST OF DATA</h1>
+            <thead>
+                <tr>
+
+                    <!-- <th scope="col"></th> -->
+                    <th scope="col" class="text-white">Type</th>
+                    <th scope="col" class="text-white">Name</th>
+                    <th scope="col" class="text-white">Code</th>
+                    <th scope="col" class="text-white">Amount</th>
+                    <th scope="col" class="text-white">Discount</th>
+                    <th scope="col" class="text-white">Status</th>
+                    <th scope="col" class="text-white">Server</th>
+                    <th scope="col" class="text-white">Product Code</th>
+                    <th scope="col" class="text-white">Network</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <!-- <th scope="row">1</th> -->
+                @foreach ($data as $datas)
+                    <tr>
+                        <td class="text-white">{{ $datas['type'] }}</td>
+                        <td class="text-white">{{ $datas['name'] }}</td>
+                        <td class="text-white">{{ $datas['code'] }}</td>
+                        <td class="text-white">{{ $datas['amount'] }}</td>
+                        <td class="text-white">{{ $datas['discount'] }}</td>
+                        <td class="text-white">{{ $datas['status'] }}</td>
+                        <td class="text-white">{{ $datas['server'] }}</td>
+                        <td class="text-white">{{ $datas['product_code'] }}</td>
+                        <td class="text-white">{{ $datas['network'] }}</td>
+                    </tr>
+                @endforeach
+
+
+
+            </tbody>
+        </table>
     </div>
 
 

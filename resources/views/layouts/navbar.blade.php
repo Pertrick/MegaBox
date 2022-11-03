@@ -36,11 +36,11 @@
                 <div class="container-fluid p-0">
                     <div class="row align-items-center no-gutters">
                         <div class="col-xl-2 col-lg-2">
-                            <div class="logo-img">
+                            {{-- <div class="logo-img">
                                 <a href="index.html">
                                     <img src="hostza-master/img/logo.png" alt="">
                                 </a>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="col-xl-7 col-lg-7">
                             <div class="main-menu  d-none d-lg-block">
@@ -48,9 +48,9 @@
                                     <ul id="navigation">
                                         <li><a class="active" href="{{ url('/') }}">home</a></li>
                                         <li><a href="{{ route('listairt') }}">Airtime</a></li>
-                                       <li><a href="Support.html">Data<i class="ti-angle-down"></i></a></li>
-                                        <li><a href="about.html">About</a></li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                       <li><a href="{{ route("listdata") }}">Data</a></li>
+                                        <li><a href="#">About</a></li>
+                                        <li><a href="#">Contact</a></li>
                                     </ul>
                                 </nav>
                             </div>

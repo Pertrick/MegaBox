@@ -1,5 +1,4 @@
-@extends('layouts.navbar')
-
+@extends('layouts.navbar');
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -16,7 +15,7 @@
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
-    <link rel="stylesheet" href="hostza-master/css/bootstrap.min.css">
+    {{-- <link rel="stylesheet" href="hostza-master/css/bootstrap.min.css">
     <link rel="stylesheet" href="hostza-master/css/owl.carousel.min.css">
     <link rel="stylesheet" href="hostza-master/css/magnific-popup.css">
     <link rel="stylesheet" href="hostza-master/css/font-awesome.min.css">
@@ -27,7 +26,7 @@
     <link rel="stylesheet" href="hostza-master/css/animate.css">
     <link rel="stylesheet" href="hostza-master/css/slicknav.css">
     <link rel="stylesheet" href="hostza-master/css/style.css">
-    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+    <link rel="stylesheet" href="css/responsive.css"> --}}
     <!--Jquery -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
@@ -39,7 +38,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
     <style>
-        .overlay {
+        /* .overlay {
             display: none;
             position: fixed;
             width: 100%;
@@ -48,11 +47,11 @@
             left: 0;
             z-index: 999;
             background: rgba(255, 245, 245, 0.5) url(hostza-master/img/Spinner-1s-200px.gif) center no-repeat;
-        }
+        } */
 
-        body {
-            text-align: center;
-        }
+        /* * {
+            background: rgba(255, 245, 245, 0.5) url(hostza-master/img/Spinner-1s-200px.gif) center no-repeat;
+        } */
 
         /* Turn off scrollbar when body element has the loading class */
         body.loading {
@@ -100,95 +99,87 @@
             padding-left: 10px;
 
         }
+
+
+        table {
+            margin-bottom: 300px;
+        }
     </style>
 
-    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+    <!-- {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}} -->
 
 </head>
 
 <body>
-    <!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
+    <!-- {{-- header-begin --}} -->
 
-    <!-- header-start -->
-    {{-- <header>
-        <div class="header-area ">
-            <div id="sticky-header" class="main-header-area">
-                <div class="container-fluid p-0">
-                    <div class="row align-items-center no-gutters">
-                        <div class="col-xl-2 col-lg-2">
-                            {{-- <div class="logo-img">
-                                <a href="index.html">
-                                    <img src="hostza-master/img/logo.png" alt="">
-                                </a>
-                            </div> --}}
-                        {{-- </div>
-                        <div class="col-xl-7 col-lg-7">
-                            <div class="main-menu  d-none d-lg-block">
-                                <nav>
-                                    <ul id="navigation">
-                                        <li><a class="active" href="#">home</a></li>
-                                        <li><a href="{{ route('airtime') }}">Airtime</a></li>
-                                     
-                                        <li><a href="#">Data</a></li>
-                                        <li><a href="#">About</a></li>
-                                        <li><a href="#">Contact</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
-                            <div class="log_chat_area d-flex align-items-center">
-                                <a href="#test-form" class="login popup-with-form">
-                                    <i class="flaticon-user"></i>
-                                    <span>log in</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>  --}}
     <!-- header-end -->
 
     <!-- slider_area_start -->
     <div class="slider_area">
         <div class="single_slider d-flex align-items-center justify-content-center slider_bg_1 overlay2">
             <div class="container">
-                @if (session('message'))
-                    <div class="alert alert-success my-2 mx-4">
-                        <button type="button" class="close" data-dismiss="alert">x</button>
-                        <div class="text-center">{{ session('message') }}</div>
-                    </div>
-                @endif
-                <div class="row align-items-center justify-content-center">
+
+                <div class="row">
                     <div class="col-xl-9">
-                        <div class="slider_text text-center">
-                            <p>The Best Data and Airtime Provider In The Area</p>
-                            <h3 style="font-size:300%;">Go Big with your next Data Or Airtime</h3>
-                            <div class="find_dowmain">
-                                <form class="find_dowmain_form">
-                                    <input id="files" type="file" accept=".csv" required
-                                        placeholder="Find your domain">
-                                    <button id="submit-file" type="submit">Preview File</button>
-                                </form>
+                        <div class="">
+
+                            <div class="container">
+
+                                <div class="data">
+                                    {{-- <div class="row align-items-center justify-content-center"> --}}
+                                    {{-- <div class="col-xl-9"> --}}
+                                    <div class="slider_text text-center">
+                                        <p>Please kindly scroll down to see the list of Airtime we have</p>
+                                        <h3 style="font-size:200%; padding-top:100px;">Go Big with your next Airtime
+                                        </h3>
+                                        <div class="find_dowmain" style="padding-bottom:150px;">
+                                            <form class="find_dowmain_form">
+                                                <input id="files" type="file" accept=".csv" required
+                                                    placeholder="Find your domain">
+                                                <button id="submit-file" type="submit">Preview File</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    {{-- </div> --}}
+                                    {{-- </div> --}}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="airtime">
+            <table class="table table-striped slider_bg_1 overlay2">
+                <h1 class="text-white mb-5">LIST OF AIRTIMES</h1>
+                <thead>
+                    <tr>
+                        <!-- <th scope="col"></th> -->
+                        <th scope="col" class="text-white">Network</th>
+                        <th scope="col" class="text-white">Discount</th>
+                        <th scope="col" class="text-white">Server</th>
+                        <th scope="col" class="text-white">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- <th scope="row">1</th> -->
+                    @foreach ($airtime as $airt)
+                        <tr>
+                            <td class="text-white">{{ $airt['network'] }}</td>
+                            <td class="text-white">{{ $airt['discount'] }}</td>
+                            <td class="text-white">{{ $airt['server'] }}</td>
+                            <td class="text-white">{{ $airt['status'] }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 
-
-    <!-- Button trigger modal -->
-
-    <!-- Modal -->
+     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-lg modal-dialog-centered " role="document">
@@ -248,9 +239,8 @@
 
 
 
-
     <script>
-        $(document).ready(function() {
+     $(document).ready(function() {
             $('#submit-file').on("click", function(e) {
                 e.preventDefault();
                 $('#files').parse({
@@ -372,6 +362,7 @@
                 /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return res.test(String(email).toLowerCase());
         }
+    
     </script>
 
 

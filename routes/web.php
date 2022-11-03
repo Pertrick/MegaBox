@@ -41,6 +41,9 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::post('preview', [AirtimeController::class, 'index'])->name('preview');
-//for displaying list of airtime and data
+//for displaying list of airtime
 Route::get('listairt', [ServiceController::class, 'airtime'])->name('listairt');
+
+//for displaying list of data
+Route::get('listdata', [ServiceController::class, 'data'])->name('listdata');
 

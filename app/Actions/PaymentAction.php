@@ -65,17 +65,17 @@ class PaymentAction
                 $payment = new Payment();
                 $payment->savePayment($user, $email, $type, $reference, 'NGN', 100);
                 $uploadedData = Json_decode($uploadedData, true);
-                if ($type == 'airtime') {
-                    foreach ($uploadedData as $value) {
-                        $data = new Airtime();
-                        $data->saveAirtime($value, $email,$type);
-                    }
-                } else {
-                    foreach ($uploadedData as $value) {
-                        $data = new Data();
-                        $data->saveData($value, $email,$type);
-                    }
-                }
+                // if ($type == 'airtime') {
+                //     foreach ($uploadedData as $value) {
+                //         $data = new Airtime();
+                //         $data->saveAirtime($value, $email,$type);
+                //     }
+                // } else {
+                //     foreach ($uploadedData as $value) {
+                //         $data = new Data();
+                //         $data->saveData($value, $email,$type);
+                //     }
+                // }
             });
 
             return $payout_link;

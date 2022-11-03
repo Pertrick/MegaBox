@@ -35,9 +35,12 @@ class ServiceController extends Controller
         $response = json_decode($response, true);
         $airtime = $response["data"];
 
-
-
-        $curl = curl_init();
+         return view('airtime', compact('airtime'));
+        
+    }
+    function data(){
+       
+      $curl = curl_init();
 
         curl_setopt_array($curl, array(
           CURLOPT_URL => 'https://test.mcd.5starcompany.com.ng/api/reseller/list',
@@ -64,11 +67,6 @@ class ServiceController extends Controller
         $datalist = json_decode($resp, true);
         $data = $datalist["data"];
         // dd($data);
-        //  return view('landingpage', compact('data'));
-         return view('landingpage', compact('airtime','data'));
-        
-    }
-    function data(){
-       
+         return view('data', compact('data'));
     }
 }
