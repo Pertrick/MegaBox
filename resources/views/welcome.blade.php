@@ -1,110 +1,5 @@
-@extends('layouts.navbar')
 
-<!doctype html>
-<html class="no-js" lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Mega Box</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="hostza-master/img/favicon.png">
-    <!-- Place favicon.ico in the root directory -->
-
-    <!-- CSS here -->
-    <link rel="stylesheet" href="hostza-master/css/bootstrap.min.css">
-    <link rel="stylesheet" href="hostza-master/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="hostza-master/css/magnific-popup.css">
-    <link rel="stylesheet" href="hostza-master/css/font-awesome.min.css">
-    <link rel="stylesheet" href="hostza-master/css/themify-icons.css">
-    <link rel="stylesheet" href="hostza-master/css/nice-select.css">
-    <link rel="stylesheet" href="hostza-master/css/flaticon.css">
-    <link rel="stylesheet" href="hostza-master/css/gijgo.css">
-    <link rel="stylesheet" href="hostza-master/css/animate.css">
-    <link rel="stylesheet" href="hostza-master/css/slicknav.css">
-    <link rel="stylesheet" href="hostza-master/css/style.css">
-    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
-    <!--Jquery -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-    <style>
-        .overlay {
-            display: none;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 999;
-            background: rgba(255, 245, 245, 0.5) url(hostza-master/img/Spinner-1s-200px.gif) center no-repeat;
-        }
-
-        body {
-            text-align: center;
-        }
-
-        /* Turn off scrollbar when body element has the loading class */
-        body.loading {
-            overflow: hidden;
-        }
-
-        /* Make spinner image visible when body element has the loading class */
-        body.loading .overlay {
-            display: block;
-        }
-
-        #exampleModal .modal-dialog,
-        #exampleModal .modal-content {
-            height: 90;
-        }
-
-        #exampleModal .modal-body {
-            overflow-y: scroll;
-        }
-
-        .modal-backdrop {
-            opacity: 0.5 !important;
-        }
-
-
-        tbody td {
-            cursor: pointer;
-            color: black;
-        }
-
-        #radio {
-            display: flex;
-            margin-right: 50px;
-            margin-top: 20px;
-            margin-bottom: 160px;
-            padding-left: 10px;
-        }
-
-        label {
-
-            padding-left: 20px;
-        }
-
-        #radio.input {
-            padding-left: 10px;
-
-        }
-    </style>
-
-    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
-
-</head>
+@include('partials.header')
 
 <body>
     <!--[if lte IE 9]>
@@ -112,48 +7,7 @@
         <![endif]-->
 
     <!-- header-start -->
-    {{-- <header>
-        <div class="header-area ">
-            <div id="sticky-header" class="main-header-area">
-                <div class="container-fluid p-0">
-                    <div class="row align-items-center no-gutters">
-                        <div class="col-xl-2 col-lg-2">
-                            {{-- <div class="logo-img">
-                                <a href="index.html">
-                                    <img src="hostza-master/img/logo.png" alt="">
-                                </a>
-                            </div> --}}
-                        {{-- </div>
-                        <div class="col-xl-7 col-lg-7">
-                            <div class="main-menu  d-none d-lg-block">
-                                <nav>
-                                    <ul id="navigation">
-                                        <li><a class="active" href="#">home</a></li>
-                                        <li><a href="{{ route('airtime') }}">Airtime</a></li>
-                                     
-                                        <li><a href="#">Data</a></li>
-                                        <li><a href="#">About</a></li>
-                                        <li><a href="#">Contact</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
-                            <div class="log_chat_area d-flex align-items-center">
-                                <a href="#test-form" class="login popup-with-form">
-                                    <i class="flaticon-user"></i>
-                                    <span>log in</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>  --}}
+        @include('partials.navigation')
     <!-- header-end -->
 
     <!-- slider_area_start -->
@@ -185,6 +39,144 @@
         </div>
     </div>
 
+     <!-- prising_area_start -->
+     <div class="prising_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="section_title text-center mb-100">
+                        <h3>
+                            Choose your Service Plan
+                        </h3>
+                        <p>Choose the best of services from our pool of Discounted Airtime and Data. <br>
+                            Our Data Services cuts across all networks.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-lg-6">
+                    <div class="single_prising">
+                        <div class="prising_icon blue">
+                            <i class="flaticon-servers"></i>
+                        </div>
+                        <h3>Airtime</h3>
+                        <p class="prising_text">Bulk purchase of airtime made so easy and also affordable just for you</p>
+                        <p class="prise">Start from as low as <span>&#8358;50</span></p>
+                        <a href="{{route('airtime')}}" class="boxed_btn_green2">See more</a>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-lg-6">
+                    <div class="single_prising">
+                        <div class="prising_icon lite_blue">
+                            <i class="flaticon-hosting"></i>
+                        </div>
+                        <h3>Data</h3>
+                        <p class="prising_text">Purchase your Data in Bulk at a discounted price simply and easy</p>
+                        <p class="prise">Start from as low as<span>100 mb</span></p>
+                        <a href="{{route('data')}}" class="boxed_btn_green2">See more</a>
+                    </div>
+                </div>
+              
+             
+            </div>
+        </div>
+    </div>
+    <!-- prising_area_end -->
+
+    <footer class="footer">
+        <div class="footer_top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 col-lg-3">
+                        <div class="footer_widget">
+                            <div class="footer_logo">
+                                <a href="#">
+                                    <img src="img/logo.png" alt="">
+                                </a>
+                            </div>
+                            <p class="footer_text doanar"> <a class="first" href="#">+10 783 467 3789
+                                </a> <br>
+                                <a href="#">hostza@support.com</a></p>
+                            <div class="socail_links">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-facebook-square"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-instagram"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-lg-3">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">
+                                service
+                            </h3>
+                            <ul>
+                                <li><a href="#">Hosting</a></li>
+                                <li><a href="#">Domain</a></li>
+                                <li><a href="#">Wordpress</a></li>
+                                <li><a href="#">Shared Hosting</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-6 col-lg-2">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">
+                                Navigation
+                            </h3>
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Rooms</a></li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">News</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-lg-4">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">
+                                Newsletter
+                            </h3>
+                            <form action="#" class="newsletter_form">
+                                <input type="text" placeholder="Enter your mail">
+                                <button type="submit">Sign Up</button>
+                            </form>
+                            <p class="newsletter_text">Subscribe newsletter to get updates</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copy-right_text">
+            <div class="container">
+                <div class="footer_border"></div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <p class="copy_right text-center">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Button trigger modal -->
 

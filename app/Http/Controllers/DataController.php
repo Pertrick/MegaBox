@@ -6,6 +6,8 @@ use App\Models\Data;
 use App\Models\datas;
 use App\Jobs\StartBuildJob;
 use Illuminate\Http\Request;
+use App\Actions\ServiceProviderAction;
+use Cache;
 
 class DataController extends Controller
 {
@@ -14,9 +16,27 @@ class DataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ServiceProviderAction $serviceProvider)
     {
-        //
+        $mtn = Cache::rememberForever('mtn', function() use($serviceProvider){
+           return $serviceProvider->mtnData()['data'];
+        });
+
+        $airtel = Cache::rememberForever('airtel', function()use($serviceProvider){
+            return $serviceProvider->airtelData()['data'];
+        });
+
+        $etisalat= Cache::rememberForever('etisalat', function()use($serviceProvider){
+            return $serviceProvider->etisalatData()['data'];
+        });
+        
+        
+        $glo = Cache::rememberForever('glo', function()use($serviceProvider){
+           return  $serviceProvider->gloData()['data'];
+
+        });
+
+        return view('data', compact('mtn', 'airtel', 'glo', 'etisalat'));
     }
 
     /**
