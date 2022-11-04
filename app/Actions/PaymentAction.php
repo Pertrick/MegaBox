@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class PaymentAction
 {
 
-    public function paymentCheckout($email)
+    public function paymentCheckout($email, $amount)
     {
         $reference = substr(md5(uniqid()), 0, 10);
         $user = "user$reference";
@@ -29,7 +29,7 @@ class PaymentAction
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => '{
             "reference": "' . $reference . '",
-            "amount": "' . env('AMOUNT') . '",
+            "amount": "' . $amount . '",
             "currency": "NGN",
             "redirect_url" : "' . env('APP_URL') . 'verify",
                 "customer": {

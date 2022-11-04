@@ -29,29 +29,28 @@ class AirtimeController extends Controller
             'data' => ['required', 'json'],
         ]);
 
+        $total_amount = 0;
         $email =$request->email;
         $uploadedData = $request->data;
+        $uploadedData = Json_decode($uploadedData, true);
 
-        $payout = $payment->paymentCheckout($email);
+        foreach ($uploadedData as ["amount" => $amount]) {
+            $total_amount = $total_amount + $amount;
+        }
+
+
+        $payout = $payment->paymentCheckout($email,$total_amount);
         $reference =$payout['reference'];
 
         if($payout){
 
-            DB::transaction(function () use ($email, $uploadedData, $reference): void {
-
-                $total_amount = 0;
-                $uploadedData = Json_decode($uploadedData, true);
-
-                foreach ($uploadedData as ["amount" => $amount]) {
-                    $total_amount = $total_amount + $amount;
-                }
+            DB::transaction(function () use ($email, $uploadedData, $reference, $total_amount): void {
 
                 $payment = new Payment();
                 $payment->savePayment("user$reference", $email, "data", $reference, 'NGN', $total_amount);
 
                 $paymentId =$payment->id;
                 foreach ($uploadedData as $value) {
-                    $total_amount = $total_amount + $value['amount'];
                     $data = new Airtime();
                     $data->saveAirtime($value, $email,$paymentId);
                 }
