@@ -8,20 +8,7 @@ use App\Actions\PaymentAction;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function checkout(PaymentAction $payment, Request $request)
-    {
-        $payout_link = $payment->paymentCheckout($request);
-        if($payout_link){
-            return response()->json($payout_link);
-        }
-
-    }
-
+   
     /**
      * Show the form for creating a new resource.
      *

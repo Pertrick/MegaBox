@@ -41,9 +41,10 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::get('airtime', [AirtimeController::class, 'index'])->name('airtime');
-
+Route::post('airtime/store', [AirtimeController::class, 'store'])->name('airtime.store');
 
 
 //for displaying list of data
 Route::get('data', [DataController::class, 'index'])->name('data');
 
+Route::post('data/store', [DataController::class, 'store'])->name('data.store');

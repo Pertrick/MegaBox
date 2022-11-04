@@ -10,19 +10,16 @@ class Airtime extends Model
     use HasFactory;
 
     protected $fillable = [
-        'phone_number',
-        'network',
-        'amount',
-        'status',
-        'uploaded_by',
+        'email',
+        'data'
     ];
 
-    public function saveAirtime($airtime,$email, $type){
-        dd($airtime['phone']);
-        $this->phone_number = $airtime['phone'];
+    public function saveAirtime($airtime,$email, $paymentId){
+        $this->phone_number = $airtime['phone_number'];
         $this->network = $airtime['network'];
         $this->amount = $airtime['amount'];
         $this->status = false;
+        $this->payment_id = $paymentId;
         $this->uploaded_by = $email;
 
         $this->save();

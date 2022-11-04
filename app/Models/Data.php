@@ -9,11 +9,17 @@ class Data extends Model
 {
     use HasFactory;
 
-    public function saveData($data,$email, $type){
-            $this->phone_number = $data['phone'];
+    protected $fillable =[
+        'email',
+        'data'
+    ];
+
+    public function saveData($data,$email, $paymentId){
+            $this->phone_number = $data['phone_number'];
             $this->network = $data['network'];
             $this->amount = $data['amount'];
             $this->status = false;
+            $this->payment_id = $paymentId;
             $this->uploaded_by = $email;
 
             $this->save();
