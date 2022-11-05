@@ -169,13 +169,13 @@
                 <div class="row align-items-center justify-content-center">
                     <div class="col-xl-9">
                         <div class="slider_text text-center">
-                            <p>The Best Data and Airtime Provider In The Area</p>
-                            <h3 style="font-size:300%;">Go Big with your next Data Or Airtime</h3>
+                            {{-- <p>The Best Data and Airtime Provider In The Area</p> --}}
+                            {{-- <h3 style="font-size:300%;">Go Big with your next Data Or Airtime</h3> --}}
                             <div class="find_dowmain">
                                 <form class="find_dowmain_form">
-                                    <input id="files" type="file" accept=".csv" required
+                                    <input id="files" type="file" accept=".csv" class="form-control" required
                                         placeholder="Find your domain">
-                                    <button id="submit-file" type="submit">Preview File</button>
+                                    <button id="submit-file" type="submit">Upload</button>
                                 </form>
                             </div>
                         </div>
