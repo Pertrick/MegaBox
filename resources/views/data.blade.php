@@ -66,6 +66,7 @@
                                 <tr>
                                     <th></th>
                                     <th>Product/Service</th>
+                                    <th>Code</th>
                                     <th>Amount</th>
                                     <th>Regular Discount</th>
                                 </tr>
@@ -76,6 +77,7 @@
                                 <tr>
                                     <td><img src="/images/MTN-logo.jpg" width="40" height="40" style="border-radius:50%;"></td>
                                     <td>{{$value['name']}}</td>
+                                    <td>{{$value['code']}}</td>
                                     <td>&#8358;{{$value['amount']}}</td>
                                     <td>{{$value['discount']}}</td>
                                     
@@ -86,6 +88,7 @@
                                 <tr>
                                     <td><img src="/images/airtel-logo.jpg" width="40" height="40" style="border-radius:50%;"></td>
                                     <td>{{$value['name']}}</td>
+                                    <td>{{$value['code']}}</td>
                                     <td>&#8358;{{$value['amount']}}</td>
                                     <td>{{$value['discount']}}</td>
                                     
@@ -96,6 +99,7 @@
                                 <tr>
                                     <td><img src="/images/glo-logo.jpg" width="40" height="40" style="border-radius:50%;"></td>
                                     <td>{{$value['name']}}</td>
+                                    <td>{{$value['code']}}</td>
                                     <td>&#8358;{{$value['amount']}}</td>
                                     <td>{{$value['discount']}}</td>
                                     
@@ -106,6 +110,7 @@
                                 <tr>
                                     <td><img src="/images/9mobile-logo.jpg" width="40" height="40" style="border-radius:50%;"></td>
                                     <td>{{$value['name']}}</td>
+                                    <td>{{$value['code']}}</td>
                                     <td>&#8358;{{$value['amount']}}</td>
                                     <td>{{$value['discount']}}</td>
                                     

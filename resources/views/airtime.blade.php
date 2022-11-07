@@ -70,24 +70,29 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th>Product/Service</th>
+                                    <th>Network</th>
                                     <th>Regular Discount</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td> <img src="/images/MTN-logo.jpg" width="60" height="60" style="border-radius:50%;"></td>
+                                    <td>MTN</td>
                                     <td>3% Discount</td>
                                 </tr>
                                 <tr>
                                     <td> <img src="/images/airtel-logo.jpg" width="60" height="60" style="border-radius:50%;"></td>
+                                    <td>AIRTEL</td>
                                     <td>3% Discount</td>
                                 </tr>
                                 <tr>
                                     <td> <img src="/images/glo-logo.jpg" width="60" height="60" style="border-radius:50%;"></td>
+                                    <td>GLO</td>
                                     <td>3% Discount</td>
                                 </tr>
                                 <tr>
                                     <td> <img src="/images/9mobile-logo.jpg" width="60" height="60" style="border-radius:50%;"></td>
+                                    <td>9MOBILE</td>
                                     <td>3% Discount</td>
                                 </tr>
                             </tbody>

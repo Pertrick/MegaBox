@@ -13,6 +13,7 @@ use Cache;
 
 class DataController extends Controller
 {
+   
     /**
      * Display a listing of the resource.
      *
@@ -20,23 +21,10 @@ class DataController extends Controller
      */
     public function index(ServiceProviderAction $serviceProvider)
     {
-        $mtn = Cache::rememberForever('mtn', function() use($serviceProvider){
-           return $serviceProvider->mtnData()['data'];
-        });
-
-        $airtel = Cache::rememberForever('airtel', function()use($serviceProvider){
-            return $serviceProvider->airtelData()['data'];
-        });
-
-        $etisalat= Cache::rememberForever('etisalat', function()use($serviceProvider){
-            return $serviceProvider->etisalatData()['data'];
-        });
-        
-        
-        $glo = Cache::rememberForever('glo', function()use($serviceProvider){
-           return  $serviceProvider->gloData()['data'];
-
-        });
+        $mtn = $serviceProvider->cachedMtn();
+        $airtel = $serviceProvider->cachedAirtel();
+        $glo = $serviceProvider->cachedGlo();
+        $etisalat = $serviceProvider->cachedEtisalat();
 
         return view('data', compact('mtn', 'airtel', 'glo', 'etisalat'));
     }
@@ -46,9 +34,42 @@ class DataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function validateValues(ServiceProviderAction $serviceProvider, Request $request)
     {
-        //
+        $values = $request->values;
+    
+        if(empty($values)){
+            return response()->json(['error' => 'Incorrrect Data'],400);
+        }
+
+        $mtn = $serviceProvider->cachedMtn();
+        $airtel = $serviceProvider->cachedAirtel();
+        $glo = $serviceProvider->cachedGlo();
+        $etisalat = $serviceProvider->cachedEtisalat();
+       
+        $mergedArray =  array_merge($mtn, $airtel, $glo, $etisalat);
+
+        $arraycode =[];
+
+        foreach($mergedArray as $arrays){
+            array_push ($arraycode, $arrays['code']);
+        }
+
+        $check = false;
+      
+        foreach($values as $value){
+            if(!in_array($value, $arraycode)){
+                $check = true;
+            }
+        }
+
+        if($check){
+            return response()->json('Error',400);
+        }else{
+            return response()->json('validated',200);
+        }
+
+        
     }
 
     /**

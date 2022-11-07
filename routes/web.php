@@ -46,5 +46,5 @@ Route::post('airtime/store', [AirtimeController::class, 'store'])->name('airtime
 
 //for displaying list of data
 Route::get('data', [DataController::class, 'index'])->name('data');
-
+Route::post('data/validate', [DataController::class, 'validateValues'])->name('data.validate');
 Route::post('data/store', [DataController::class, 'store'])->name('data.store');

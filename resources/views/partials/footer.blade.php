@@ -10,7 +10,7 @@
                            
                             <p class="footer_text doanar"> <a class="first" href="#">+10 783 467 3789
                                 </a> <br>
-                                <a href="#">megabox@support.com</a></p>
+                                <a href="#">megabulkservice@support.com</a></p>
                             <div class="socail_links">
                                 <ul>
                                     <li>
@@ -69,7 +69,7 @@
                     <div class="col-xl-12">
                         <p class="copy_right text-center">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | <a href="/" target="_blank">Mega Box</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | <a href="/" target="_blank">Mega Bulk Service</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </p>
                     </div>

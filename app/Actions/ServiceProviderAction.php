@@ -3,6 +3,7 @@
 namespace App\Actions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Cache;
 
 class ServiceProviderAction
 {
@@ -162,4 +163,42 @@ class ServiceProviderAction
           $gloDataList = json_decode($response, true);
           return $gloDataList;
       }
+
+
+      public function cachedMtn(){
+        $mtnData = $this->mtnData();
+          $mtn = Cache::rememberForever('mtn', function() use($mtnData){
+            return $mtnData['data'];
+        });
+
+        return $mtn;
+      }
+
+       public function cachedAirtel(){
+        $airtelData = $this->airtelData();
+          $airtel = Cache::rememberForever('airtel', function() use($airtelData){
+            return $airtelData['data'];
+        });
+
+        return $airtel;
+     }
+
+      public function cachedGlo(){
+        $gloData = $this->gloData();
+          $glo = Cache::rememberForever('glo', function() use($gloData){
+            return $gloData['data'];
+        });
+
+        return $glo;
+      }
+
+      public function cachedEtisalat(){
+        $etisalatData = $this->etisalatData();
+        $etisalat = Cache::rememberForever('etisalat', function() use($etisalatData){
+          return $etisalatData['data'];
+        });
+
+          return $etisalat;
+      }
+  
 }
