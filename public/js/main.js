@@ -1,0 +1,122 @@
+
+$(document).ready(function() {
+    $('#submit-file').on("click", function(e) {
+        e.preventDefault();
+        $('#files').parse({
+            config: {
+                delimiter: "",
+                header: false,
+                complete: displayHTMLTable,
+            },
+            error: function(err, file) {},
+            beforeSend: function(){
+                Swal.showLoading();
+            },
+            complete: function(){
+                Swal.close();
+            },
+        })
+    })
+    $('#collect-user-email').click(function(e) {
+        $('#exampleModal').modal("hide");
+        $('#paymentModal').modal("show");
+    });
+    $('#proceed-to-pay').click(function(e) {
+        e.preventDefault();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        const email = $('#email').val();
+        const type = $("#type").val();
+
+        const data = JSON.stringify(convertToJson());
+        if (validateEmail(email)) {
+                ajaxRequest(type, data, email);
+        } else {
+                Swal.fire({
+                        title:"Invalid email!",
+                        icon: "error",
+                        button:"close"
+                    }
+            )
+        }
+    });
+});
+
+function displayHTMLTable(results) {
+    var table = "<table class='table table-bordered table-hover' id='tblData' style='width:100%; margin:0 auto;'>";
+    var data = results.data;
+    for (i = 0; i < data.length; i++) {
+        table += "<tr>";
+        var row = data[i];
+        var cells = row.join(",").split(",");
+        for (j = 0; j < cells.length; j++) {
+            table += "<td>";
+            table += cells[j];
+            table += "</th>";
+        }
+        table += "</tr>";
+    }
+    table += "</table>";
+    $(".table-responsive").html(table);
+    $('#exampleModal').modal("show");
+}
+
+function convertToJson() {
+
+    var table = document.getElementById("tblData");
+    console.log(table);
+    var header = [];
+    var rows = [];
+
+    for (var i = 0; i < table.rows[0].cells.length; i++) {
+        header.push(table.rows[0].cells[i].innerHTML);
+    }
+
+    for (var i = 1; i < table.rows.length; i++) {
+        var row = {};
+        for (var j = 0; j < table.rows[i].cells.length; j++) {
+            row[header[j]] = table.rows[i].cells[j].innerHTML;
+        }
+        rows.push(row);
+    }
+
+    return rows;
+
+}
+
+function validateEmail(email) {
+    const res =
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return res.test(String(email).toLowerCase());
+}
+
+function ajaxRequest(type,data,email){
+    $.ajax({
+        type: "POST",
+        url: "/"+type+"/store",
+        dataType: 'JSON',
+        data: {
+            'email': email,
+            'data': data
+        },
+        beforeSend: function(){
+            Swal.showLoading();
+        },
+        complete: function(){
+            Swal.close();
+        },
+        success: function(payout) {
+            payout_link = payout['checkout_url'];
+            console.log(payout['checkout_url']);
+            window.location = payout_link;                
+
+        },
+        error: function(response) {
+            console.log(response);
+        }
+    });
+}

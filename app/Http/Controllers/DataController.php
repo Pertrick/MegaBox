@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Data;
-use App\Models\datas;
+use App\Models\Payment;
+use Illuminate\Support\Facades\DB;
 use App\Jobs\StartBuildJob;
 use Illuminate\Http\Request;
+use App\Actions\ServiceProviderAction;
+use App\Actions\PaymentAction;
+use Cache;
 
 class DataController extends Controller
 {
@@ -14,9 +18,27 @@ class DataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ServiceProviderAction $serviceProvider)
     {
-        //
+        $mtn = Cache::rememberForever('mtn', function() use($serviceProvider){
+           return $serviceProvider->mtnData()['data'];
+        });
+
+        $airtel = Cache::rememberForever('airtel', function()use($serviceProvider){
+            return $serviceProvider->airtelData()['data'];
+        });
+
+        $etisalat= Cache::rememberForever('etisalat', function()use($serviceProvider){
+            return $serviceProvider->etisalatData()['data'];
+        });
+        
+        
+        $glo = Cache::rememberForever('glo', function()use($serviceProvider){
+           return  $serviceProvider->gloData()['data'];
+
+        });
+
+        return view('data', compact('mtn', 'airtel', 'glo', 'etisalat'));
     }
 
     /**
@@ -35,8 +57,43 @@ class DataController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PaymentAction $payment, Request $request)
     {
+        
+        $request->validate([
+            'email' => ['required', 'email'],
+            'data' => ['required', 'json'],
+        ]);
+
+        $total_amount = 0;
+        $email =$request->email;
+        $uploadedData = $request->data;
+        $uploadedData = Json_decode($uploadedData, true);
+
+        foreach ($uploadedData as ["amount" => $amount]) {
+            $total_amount = $total_amount + $amount;
+        }
+
+        $payout = $payment->paymentCheckout($email,$total_amount);
+        $reference =$payout['reference'];
+
+        if($payout){
+
+            DB::transaction(function () use ($email, $uploadedData, $reference, $total_amount): void {
+
+                $payment = new Payment();
+                $payment->savePayment("user$reference", $email, "data", $reference, 'NGN', $total_amount);
+
+                $paymentId =$payment->id;
+                foreach ($uploadedData as $value) {
+                    $data = new Data();
+                    $data->saveData($value, $email,$paymentId);
+                }
+                
+            });
+            
+            return response()->json($payout);
+        }
 
     }
 

@@ -11,19 +11,10 @@ use Illuminate\Support\Facades\DB;
 class PaymentAction
 {
 
-    public function paymentCheckout(Request $request)
+    public function paymentCheckout($email, $amount)
     {
         $reference = substr(md5(uniqid()), 0, 10);
-        $request->validate([
-            'email' => ['required', 'email'],
-            'type' => ['required'],
-            'data' => ['required', 'json'],
-        ]);
-
-        $email = $request->email;
-        $type = $request->type;
         $user = "user$reference";
-        $uploadedData = $request->data;
 
         $curl = curl_init();
 
@@ -38,7 +29,7 @@ class PaymentAction
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => '{
             "reference": "' . $reference . '",
-            "amount": "' . env('AMOUNT') . '",
+            "amount": "' . $amount . '",
             "currency": "NGN",
             "redirect_url" : "' . env('APP_URL') . 'verify",
                 "customer": {
@@ -58,27 +49,9 @@ class PaymentAction
         $response = json_decode($response, true);
 
         if ($response && $response['status'] == true) {
-            $payout_link = $response['data']['checkout_url'];
+            $payout = $response['data'];
 
-            DB::transaction(function () use ($user, $email, $type, $uploadedData, $reference): void {
-
-                $payment = new Payment();
-                $payment->savePayment($user, $email, $type, $reference, 'NGN', 100);
-                $uploadedData = Json_decode($uploadedData, true);
-                // if ($type == 'airtime') {
-                //     foreach ($uploadedData as $value) {
-                //         $data = new Airtime();
-                //         $data->saveAirtime($value, $email,$type);
-                //     }
-                // } else {
-                //     foreach ($uploadedData as $value) {
-                //         $data = new Data();
-                //         $data->saveData($value, $email,$type);
-                //     }
-                // }
-            });
-
-            return $payout_link;
+            return $payout;
         }
     }
 
