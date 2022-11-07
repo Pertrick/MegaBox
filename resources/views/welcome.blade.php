@@ -27,7 +27,7 @@
                             <h3 style="font-size:300%;">
                             Go Big with your next Data Or Airtime
                         </h3>
-                            <p class="text-light">Bulk Data purchase made easy and affordable</pn>
+                            <p class="text-light">Bulk Data purchase made easy and affordable</p>
                          
                         </div>
                     </div>
