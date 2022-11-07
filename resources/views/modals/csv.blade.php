@@ -10,7 +10,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="table-responsive">
+                    <div class="table-responsive table-modal">
 
                     </div>
                 </div>
