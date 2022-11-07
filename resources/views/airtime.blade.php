@@ -38,9 +38,7 @@
                     </div>
                 </div><br><br><br>
 
-                <a href="{{ url('downloadairtime') }}"
-                    style="background:#333ab7; color:#fff; padding:12px; display:block; text-decoration:none margin-bottom:50px; ">DOWNLOAD
-                    SAMPLE CSV FILE</a>
+                <a href="{{ url('downloadairtime') }}" class="btn btn-outline-warning">DOWNLOAD SAMPLE CSV FILE</a>
 
             </div>
         </div>
