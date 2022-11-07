@@ -40,7 +40,7 @@
                             </h3>
                             <ul>
                                 <li><a href="{{route('airtime')}}">Airtime</a></li>
-                                <li><a href="{{route('data')}}">Data</a></li>
+                                <li><a href="{{route('data.list')}}">Data</a></li>
                              
                             </ul>
 
@@ -78,36 +78,36 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </div>
     </footer>
 
-    <script src="/js/main.js"></script>
+    <script src= {{ asset("/js/main.js") }}></script>
    
 
    <!-- JS here -->
-   <script src="hostza-master/js/vendor/modernizr-3.5.0.min.js"></script>
-   <script src="hostza-master/js/vendor/jquery-1.12.4.min.js"></script>
-   <script src="hostza-master/js/popper.min.js"></script>
-   <script src="hostza-master/js/bootstrap.min.js"></script>
-   <script src="hostza-master/js/owl.carousel.min.js"></script>
-   <script src="hostza-master/js/isotope.pkgd.min.js"></script>
-   <script src="hostza-master/js/ajax-form.js"></script>
-   <script src="hostza-master/js/waypoints.min.js"></script>
-   <script src="hostza-master/js/jquery.counterup.min.js"></script>
-   <script src="hostza-master/js/imagesloaded.pkgd.min.js"></script>
-   <script src="hostza-master/js/scrollIt.js"></script>
-   <script src="hostza-master/js/jquery.scrollUp.min.js"></script>
-   <script src="hostza-master/js/wow.min.js"></script>
-   <script src="hostza-master/js/nice-select.min.js"></script>
-   <script src="hostza-master/js/jquery.slicknav.min.js"></script>
-   <script src="hostza-master/js/jquery.magnific-popup.min.js"></script>
-   <script src="hostza-master/js/plugins.js"></script>
-   <script src="hostza-master/js/gijgo.min.js"></script>
+   <script src=  {{ asset("hostza-master/js/vendor/modernizr-3.5.0.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/vendor/jquery-1.12.4.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/popper.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/bootstrap.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/owl.carousel.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/isotope.pkgd.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/ajax-form.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/waypoints.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/jquery.counterup.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/imagesloaded.pkgd.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/scrollIt.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/jquery.scrollUp.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/wow.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/nice-select.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/jquery.slicknav.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/jquery.magnific-popup.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/plugins.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/gijgo.min.js") }}></script>
 
    <!--contact js-->
-   <script src="hostza-master/js/contact.js"></script>
-   <script src="hostza-master/js/jquery.ajaxchimp.min.js"></script>
-   <script src="hostza-master/js/jquery.form.js"></script>
-   <script src="hostza-master/js/jquery.validate.min.js"></script>
-   <script src="hostza-master/js/mail-script.js"></script>
-   <script src="hostza-master/js/main.js"></script>
+   <script src={{ asset("hostza-master/js/contact.js") }} ></script>
+   <script src=   {{ asset("hostza-master/js/jquery.ajaxchimp.min.js") }} ></script>
+   <script src=  {{ asset("hostza-master/js/jquery.form.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/jquery.validate.min.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/mail-script.js") }}></script>
+   <script src=  {{ asset("hostza-master/js/main.js") }}></script>
 
    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"
        integrity="sha512-SGWgwwRA8xZgEoKiex3UubkSkV1zSE1BS6O4pXcaxcNtUlQsOmOmhVnDwIvqGRfEmuz83tIGL13cXMZn6upPyg=="

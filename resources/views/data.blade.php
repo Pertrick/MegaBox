@@ -19,7 +19,10 @@
                         <div class="text-center">{{ session('message') }}</div>
                     </div>
                 @endif
+
+
                 <div class="row align-items-center justify-content-center">
+
                     <div class="col-xl-9">
                         <div class="slider_text text-center">
                             <p>The Best Data and Airtime Provider In The Area</p>
@@ -34,7 +37,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div><br><br>
+
+                <a href="{{ url('download') }}" style="background:#333ab7; color:#fff; padding:12px; display:block; text-decoration:none margin-bottom:50px; ">DOWNLOAD SAMPLE CSV FILE</a>
+
             </div>
         </div>
     </div>

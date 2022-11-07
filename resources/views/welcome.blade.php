@@ -36,7 +36,7 @@
                             <h3 style="font-size:300%;">
                             Go Big with your next Data Or Airtime
                         </h3>
-                            <p class="text-light">Bulk Data purchase made easy and affordable</pn>
+                            <p class="text-light">Bulk Data purchase made easy and affordable</p>
                          
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                         <h3>Data Subscription</h3>
                         <p class="prising_text">Purchase your Data in Bulk at a discounted price simply and easy</p>
                         <p class="prise">Start from as low as<span>100 mb</span></p>
-                        <a href="{{route('data')}}" class="boxed_btn_green2">See more</a>
+                        <a href="{{route('data.list')}}" class="boxed_btn_green2">See more</a>
                     </div>
                 </div>
               

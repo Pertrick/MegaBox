@@ -10,21 +10,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="hostza-master/img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href= {{ asset("hostza-master/img/favicon.png") }}>
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
-    <link rel="stylesheet" href="hostza-master/css/bootstrap.min.css">
-    <link rel="stylesheet" href="hostza-master/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="hostza-master/css/magnific-popup.css">
-    <link rel="stylesheet" href="hostza-master/css/font-awesome.min.css">
-    <link rel="stylesheet" href="hostza-master/css/themify-icons.css">
-    <link rel="stylesheet" href="hostza-master/css/nice-select.css">
-    <link rel="stylesheet" href="hostza-master/css/flaticon.css">
-    <link rel="stylesheet" href="hostza-master/css/gijgo.css">
-    <link rel="stylesheet" href="hostza-master/css/animate.css">
-    <link rel="stylesheet" href="hostza-master/css/slicknav.css">
-    <link rel="stylesheet" href="hostza-master/css/style.css">
+    <link rel="stylesheet" href= {{ asset("hostza-master/css/bootstrap.min.css") }}>
+    <link rel="stylesheet" href= {{ asset("hostza-master/css/owl.carousel.min.css") }}>
+    <link rel="stylesheet" href= {{ asset("hostza-master/css/magnific-popup.css") }}>
+    <link rel="stylesheet" href= {{ asset("hostza-master/css/font-awesome.min.css") }}>
+    <link rel="stylesheet" href= {{ asset("hostza-master/css/themify-icons.css") }}>
+    <link rel="stylesheet" href= {{ asset("hostza-master/css/nice-select.css") }}>
+    <link rel="stylesheet" href= {{ asset("hostza-master/css/flaticon.css") }}>
+    <link rel="stylesheet" href= {{ asset("hostza-master/css/gijgo.css") }}>
+    <link rel="stylesheet" href= {{ asset("hostza-master/css/animate.css") }}>
+    <link rel="stylesheet" href= {{ asset("hostza-master/css/slicknav.css") }}>
+    <link rel="stylesheet" href= {{ asset("hostza-master/css/style.css") }}>
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
     <!--Jquery -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">

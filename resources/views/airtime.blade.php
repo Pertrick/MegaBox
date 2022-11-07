@@ -1,4 +1,3 @@
-
 @include('partials.header')
 
 <body>
@@ -7,7 +6,7 @@
         <![endif]-->
 
     <!-- header-start -->
-        @include('partials.navigation')
+    @include('partials.navigation')
     <!-- header-end -->
 
     <!-- slider_area_start -->
@@ -37,7 +36,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div><br><br><br>
+
+                <a href="{{ url('downloadairtime') }}"
+                    style="background:#333ab7; color:#fff; padding:12px; display:block; text-decoration:none margin-bottom:50px; ">DOWNLOAD
+                    SAMPLE CSV FILE</a>
+
             </div>
         </div>
     </div>
@@ -46,8 +50,8 @@
     <!-- Modal -->
     @include('modals.csv')
 
-     <!-- prising_area_start -->
-     <div class="prising_area">
+    <!-- prising_area_start -->
+    <div class="prising_area">
         <div class="container">
             <div class="row">
                 <div class="col-xl-12">
@@ -66,43 +70,52 @@
                     <div class="single_prising">
                         <h3>Airtime</h3>
                         <div class="prising_icon blue">
-                        <table class="table ">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Product/Service</th>
-                                    <th>Regular Discount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td> <img src="/images/MTN-logo.jpg" width="60" height="60" style="border-radius:50%;"></td>
-                                    <td>3% Discount</td>
-                                </tr>
-                                <tr>
-                                    <td> <img src="/images/airtel-logo.jpg" width="60" height="60" style="border-radius:50%;"></td>
-                                    <td>3% Discount</td>
-                                </tr>
-                                <tr>
-                                    <td> <img src="/images/glo-logo.jpg" width="60" height="60" style="border-radius:50%;"></td>
-                                    <td>3% Discount</td>
-                                </tr>
-                                <tr>
-                                    <td> <img src="/images/9mobile-logo.jpg" width="60" height="60" style="border-radius:50%;"></td>
-                                    <td>3% Discount</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            <table class="table ">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Product/Service</th>
+                                        {{-- <th>Network</th> --}}
+                                        <th>Regular Discount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> <img src="/images/MTN-logo.jpg" width="60" height="60"
+                                                style="border-radius:50%;"></td>
+                                        {{-- <td>MTN</td> --}}
+                                        <td>3% Discount</td>
+                                    </tr>
+                                    <tr>
+                                        <td> <img src="/images/airtel-logo.jpg" width="60" height="60"
+                                                style="border-radius:50%;"></td>
+                                        {{-- <td>AIRTEL</td> --}}
+                                        <td>3% Discount</td>
+                                    </tr>
+                                    <tr>
+                                        <td> <img src="/images/glo-logo.jpg" width="60" height="60"
+                                                style="border-radius:50%;"></td>
+                                        {{-- <td>GLO</td> --}}
+                                        <td>3% Discount</td>
+                                    </tr>
+                                    <tr>
+                                        <td> <img src="/images/9mobile-logo.jpg" width="60" height="60"
+                                                style="border-radius:50%;"></td>
+                                        {{-- <td>9MOBILE</td> --}}
+                                        <td>3% Discount</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <p class="prising_text">Fast and quick response for Bulk airtime distribution for all Networks</p>
+                        <p class="prising_text">Fast and quick response for Bulk airtime distribution for all Networks
+                        </p>
                         <p class="prise">From as low as<span>&#8358;50</span></p>
                         <!-- <a href="/" class="boxed_btn_green2">Start Now</a> -->
                     </div>
                 </div>
-                          
+
             </div>
         </div>
     </div>
     <!-- prising_area_end -->
 
     @include('partials.footer')
-   
