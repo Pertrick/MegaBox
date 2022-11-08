@@ -194,7 +194,7 @@ function validateDataCsv(){
 
    if(status){
     validateCode(function(response){
-        if(response.responseJSON =="Error"){
+        if(response.responseJSON =="error"){
             Swal.fire({
                 title:"Invalid Data Code Entry!",
                 icon: "error",
@@ -260,6 +260,7 @@ function validateCode(callback){
         codes.push(values['code']);   
    });
 
+   console.log(codes);
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

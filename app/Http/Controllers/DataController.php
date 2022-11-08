@@ -38,7 +38,7 @@ class DataController extends Controller
         $values = $request->values;
     
         if(empty($values)){
-            return response()->json(['error' => 'Incorrrect Data'],400);
+            return response()->json('error',400);
         }
 
         $mtn = $serviceProvider->cachedMtn();
@@ -78,7 +78,7 @@ class DataController extends Controller
         $phone = $request->phone;
     
         if(empty($values) && empty($phone)){
-            return response()->json(['error' => 'Incorrrect Data'],400);
+            return response()->json('error',400);
         }
 
         $mtn = $serviceProvider->cachedMtn();
