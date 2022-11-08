@@ -16,9 +16,17 @@
             },
         })
     })
-    $('#collect-user-email').click(function(e) {
 
-            validateCsv();
+
+    $('#collect-user-email').click(function(e){
+        const type = $("#type").val();
+        if(type == "airtime"){
+            console.log(type);
+            validateAirtimeCsv();
+        }else if(type=="data"){
+            console.log(type);
+            validateDataCsv();
+        }
     });
 
     
@@ -35,7 +43,7 @@
 
         const data = JSON.stringify(convertToJson());
         if (validateEmail(email)) {
-                ajaxRequest(type, data, email);
+                makePayment(type, data, email);
         } else {
                 Swal.fire({
                         title:"Invalid email!",
@@ -62,7 +70,7 @@ function displayHTMLTable(results) {
         table += "</tr>";
     }
     table += "</table>";
-    $(".table-responsive").html(table);
+    $(".table-modal").html(table);
     $('#exampleModal').modal("show");
 }
 
@@ -95,7 +103,7 @@ function validateEmail(email) {
     return res.test(String(email).toLowerCase());
 }
 
-function ajaxRequest(type,data,email){
+function makePayment(type,data,email){
     $.ajax({
         type: "POST",
         url: "/"+type+"/store",
@@ -123,8 +131,30 @@ function ajaxRequest(type,data,email){
 }
 
 
+function validateAirtimeCsv(){
+    let status = validatePhone();
+  
+     if(status){
+        if(!validateNetwork()){
+            Swal.fire({
+                title:"Invalid Network Service!",
+                icon: "error",
+                button:"close"
+            });
+        }else{
+            Swal.fire({
+                title:"CSV Validation Sucessful",
+                icon: "success",  
+                button:"close"
+            });
+        $('#exampleModal').modal("hide");
+        $('#paymentModal').modal("show");
+     }
+    }
+}
 
-function validateCsv(){
+
+function validateDataCsv(){
 
   let status = validatePhone();
 
@@ -207,6 +237,35 @@ function validateCode(callback){
         error: callback
            
     });
+   }
+
+
+   function validateNetwork(){
+    const network = ['MTN', "AIRTEL", "9MOBILE", "GLO"];
+
+    const data = convertToJson();
+    const service = [];
+
+   Object.entries(data).forEach(([key, values]) => {
+        service.push(values['service']);    
+   });
+
+   console.log(service);
+
+   let isService = true;
+    service.forEach(element =>{
+        if(!network.includes(element)){
+            isService = false;
+            return isService;
+        }
+
+        return isService;
+   });
+
+   console.log(isService);
+
+   return isService;
+
    }
 
 

@@ -6,7 +6,6 @@ use App\Actions\PaymentAction;
 use App\Actions\ServiceProviderAction;
 use App\Models\Data;
 use App\Models\Payment;
-use Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,29 +19,11 @@ class DataController extends Controller
      */
     public function index(ServiceProviderAction $serviceProvider)
     {
-<<<<<<< HEAD
-        $mtn = Cache::rememberForever('mtn', function () use ($serviceProvider) {
-            return $serviceProvider->mtnData()['data'];
-        });
 
-        $airtel = Cache::rememberForever('airtel', function () use ($serviceProvider) {
-            return $serviceProvider->airtelData()['data'];
-        });
-
-        $etisalat = Cache::rememberForever('etisalat', function () use ($serviceProvider) {
-            return $serviceProvider->etisalatData()['data'];
-        });
-
-        $glo = Cache::rememberForever('glo', function () use ($serviceProvider) {
-            return $serviceProvider->gloData()['data'];
-
-        });
-=======
         $mtn = $serviceProvider->cachedMtn();
         $airtel = $serviceProvider->cachedAirtel();
         $glo = $serviceProvider->cachedGlo();
         $etisalat = $serviceProvider->cachedEtisalat();
->>>>>>> 4e3a9918ee092da73a2dc29d2f6a2b6c395c0e16
 
         return view('data', compact('mtn', 'airtel', 'glo', 'etisalat'));
     }
