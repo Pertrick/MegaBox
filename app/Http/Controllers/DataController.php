@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class DataController extends Controller
 {
+   
     /**
      * Display a listing of the resource.
      *
@@ -19,6 +20,7 @@ class DataController extends Controller
      */
     public function index(ServiceProviderAction $serviceProvider)
     {
+<<<<<<< HEAD
         $mtn = Cache::rememberForever('mtn', function () use ($serviceProvider) {
             return $serviceProvider->mtnData()['data'];
         });
@@ -35,6 +37,12 @@ class DataController extends Controller
             return $serviceProvider->gloData()['data'];
 
         });
+=======
+        $mtn = $serviceProvider->cachedMtn();
+        $airtel = $serviceProvider->cachedAirtel();
+        $glo = $serviceProvider->cachedGlo();
+        $etisalat = $serviceProvider->cachedEtisalat();
+>>>>>>> 4e3a9918ee092da73a2dc29d2f6a2b6c395c0e16
 
         return view('data', compact('mtn', 'airtel', 'glo', 'etisalat'));
     }
@@ -44,9 +52,42 @@ class DataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function validateValues(ServiceProviderAction $serviceProvider, Request $request)
     {
-        //
+        $values = $request->values;
+    
+        if(empty($values)){
+            return response()->json(['error' => 'Incorrrect Data'],400);
+        }
+
+        $mtn = $serviceProvider->cachedMtn();
+        $airtel = $serviceProvider->cachedAirtel();
+        $glo = $serviceProvider->cachedGlo();
+        $etisalat = $serviceProvider->cachedEtisalat();
+       
+        $mergedArray =  array_merge($mtn, $airtel, $glo, $etisalat);
+
+        $arraycode =[];
+
+        foreach($mergedArray as $arrays){
+            array_push ($arraycode, $arrays['code']);
+        }
+
+        $check = false;
+      
+        foreach($values as $value){
+            if(!in_array($value, $arraycode)){
+                $check = true;
+            }
+        }
+
+        if($check){
+            return response()->json('Error',400);
+        }else{
+            return response()->json('validated',200);
+        }
+
+        
     }
 
     /**

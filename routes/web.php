@@ -47,13 +47,20 @@ Route::get('/downloadairtime', function () {
 })->name('downloadairtime');
 
 //for airtime
-Route::get('airtime', function (){
-return view('airtime.index');
-})->name('airtime');
+// Route::get('airtime', function (){
+// return view('airtime.index');
+// })->name('airtime');
+
+//for success page
+
+Route::get('sucess', function (){
+return view('successpage');
+})->name('sucess');
+
 
 Route::any('prev', [AirtimeController::class, 'test'])->name('prev');
 
-Route::post('data/store', [DataController::class, 'store'])->name('data.store');
+// Route::post('data/store', [DataController::class, 'store'])->name('data.store');
 
 //payment
 Route::post('payment/checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
@@ -71,6 +78,6 @@ Route::post('airtime/store', [AirtimeController::class, 'store'])->name('airtime
 
 
 //for displaying list of data
-Route::get('data/list', [DataController::class, 'index'])->name('data.list');
-
-Route::post('data/saving', [DataController::class, 'store'])->name('data.saving');
+Route::get('data', [DataController::class, 'index'])->name('data');
+Route::post('data/validate', [DataController::class, 'validateValues'])->name('data.validate');
+Route::post('data/store', [DataController::class, 'store'])->name('data.store');

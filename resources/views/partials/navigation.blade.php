@@ -5,8 +5,8 @@
                     <div class="row align-items-center no-gutters">
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo-img">
-                                <a href="index.html">
-                                    <img src= {{ asset("hostza-master/img/logo.png") }} alt="">
+                                <a href="/">
+                                    <img src="hostza-master/img/logo.png" alt="">
                                 </a>
                             </div> 
                         </div>
@@ -16,7 +16,7 @@
                                     <ul id="navigation">
                                         <li><a class="{{request()->is('/') ? 'active' : ''}}" href="/">home</a></li>
                                         <li><a class="{{request()->is('airtime*') ? 'active' : ''}}" href="{{ route('airtime') }}">Airtime</a></li>
-                                        <li><a class="{{request()->is('data*') ? 'active' : ''}}"href="{{ route('data.list') }}">Data</a></li>
+                                        <li><a class="{{request()->is('data*') ? 'active' : ''}}"href="{{ route('data') }}">Data</a></li>
                                      
                                     </ul>
                                 </nav>

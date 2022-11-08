@@ -1,5 +1,4 @@
 
-$(document).ready(function() {
     $('#submit-file').on("click", function(e) {
         e.preventDefault();
         $('#files').parse({
@@ -18,9 +17,11 @@ $(document).ready(function() {
         })
     })
     $('#collect-user-email').click(function(e) {
-        $('#exampleModal').modal("hide");
-        $('#paymentModal').modal("show");
+
+            validateCsv();
     });
+
+    
     $('#proceed-to-pay').click(function(e) {
         e.preventDefault();
 
@@ -44,7 +45,7 @@ $(document).ready(function() {
             )
         }
     });
-});
+
 
 function displayHTMLTable(results) {
     var table = "<table class='table table-bordered table-hover' id='tblData' style='width:100%; margin:0 auto;'>";
@@ -120,3 +121,93 @@ function ajaxRequest(type,data,email){
         }
     });
 }
+
+
+
+function validateCsv(){
+
+  let status = validatePhone();
+
+   console.log(status);
+
+   if(status){
+    validateCode(function(response){
+        if(response.responseJSON =="Error"){
+            Swal.fire({
+                title:"Invalid Data Code Entry!",
+                icon: "error",
+                button:"close"
+            });
+         }else{
+                Swal.fire({
+                    title:"CSV Validation Sucessful",
+                    icon: "success",  
+                    button:"close"
+                });
+            $('#exampleModal').modal("hide");
+            $('#paymentModal').modal("show");
+         }
+        
+      });
+    }
+}
+
+
+function validatePhone(){
+    const data = convertToJson();
+    const phone_number = [];
+
+   Object.entries(data).forEach(([key, values]) => {
+        phone_number.push(values['phone_number']);    
+   });
+
+    const isTrue = (phone) => phone.charAt(0) == 0 && phone.length == "11";
+
+    const status = phone_number.every(isTrue);
+    console.log(status);
+    if(!status){
+         Swal.fire({
+             title:"Invalid Phone Number Entry!",
+             icon: "error",
+             button:"close"
+         });
+    }
+
+    return status;
+}
+
+
+function validateCode(callback){
+    const data = convertToJson();
+    const codes = [];
+
+   Object.entries(data).forEach(([key, values]) => {
+        codes.push(values['code']);   
+   });
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
+       $.ajax({
+        type: "POST",
+        url: "/data/validate",
+        dataType: 'JSON',
+        data: {
+            'values': codes,
+        },
+        beforeSend: function(){
+            Swal.showLoading();
+        },
+        complete: function(){
+        },
+        success: callback,
+        error: callback
+           
+    });
+   }
+
+
+

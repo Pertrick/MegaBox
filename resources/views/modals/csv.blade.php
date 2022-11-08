@@ -17,7 +17,7 @@
                 <div class="modal-footer">
 
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                    <button type="button" id="collect-user-email" class="btn btn-success">Proceed</button>
+                    <button type="button" id="collect-user-email" class="btn btn-success">Confirm</button>
 
                 </div>
             </div>

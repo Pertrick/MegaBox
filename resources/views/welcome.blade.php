@@ -80,7 +80,7 @@
                         <h3>Data Subscription</h3>
                         <p class="prising_text">Purchase your Data in Bulk at a discounted price simply and easy</p>
                         <p class="prise">Start from as low as<span>100 mb</span></p>
-                        <a href="{{route('data.list')}}" class="boxed_btn_green2">See more</a>
+                        <a href="{{route('data')}}" class="boxed_btn_green2">See more</a>
                     </div>
                 </div>
               
