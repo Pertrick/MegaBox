@@ -71,6 +71,66 @@ class DataController extends Controller
         
     }
 
+
+    public function updateTable(ServiceProviderAction $serviceProvider, Request $request)
+    {
+        $values = $request->values;
+        $phone = $request->phone;
+    
+        if(empty($values) && empty($phone)){
+            return response()->json(['error' => 'Incorrrect Data'],400);
+        }
+
+        $mtn = $serviceProvider->cachedMtn();
+        $airtel = $serviceProvider->cachedAirtel();
+        $glo = $serviceProvider->cachedGlo();
+        $etisalat = $serviceProvider->cachedEtisalat();
+       
+        $mergedArray =  array_merge($mtn, $airtel, $glo, $etisalat);
+
+        $dataArray =[];
+
+        foreach($mergedArray as $arrays){
+            array_push ($dataArray, [$arrays['code'],$arrays['amount']]);
+        }
+
+        $tableArray = [] ;
+      
+        foreach($values as $value){
+            foreach($dataArray as $array){
+                $key = array_search($value, $array);
+                if($key === false){
+                }else{
+                    array_push($tableArray, $array);
+                }
+
+            }
+        }
+
+        $cellArray = [];
+        $header = ['phone_number', 'network_code','amount'];
+
+        array_push($cellArray, $header);
+
+            foreach( $phone as $key1 => $value){
+                foreach($tableArray as $key2 => $table){
+                    if($key2 == $key1){
+                        array_unshift($table, $value);
+                        array_push($cellArray,$table);
+                    }
+                      
+                }
+            }
+
+        if(empty($tableArray)){
+            return response()->json('empty data table',400);
+        }else{
+            return response()->json($cellArray,200);
+        }
+
+        
+    }
+
     /**
      * Store a newly created resource in storage.
      *

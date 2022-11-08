@@ -58,7 +58,7 @@ return view('successpage');
 })->name('sucess');
 
 
-Route::any('prev', [AirtimeController::class, 'test'])->name('prev');
+// Route::any('prev', [AirtimeController::class, 'test'])->name('prev');
 
 // Route::post('data/store', [DataController::class, 'store'])->name('data.store');
 
@@ -80,4 +80,5 @@ Route::post('airtime/store', [AirtimeController::class, 'store'])->name('airtime
 //for displaying list of data
 Route::get('data', [DataController::class, 'index'])->name('data');
 Route::post('data/validate', [DataController::class, 'validateValues'])->name('data.validate');
+Route::post('data/update_table', [DataController::class, 'updateTable'])->name('data.updateTable');
 Route::post('data/store', [DataController::class, 'store'])->name('data.store');

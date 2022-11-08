@@ -16,7 +16,7 @@ class Data extends Model
 
     public function saveData($data,$email, $paymentId){
             $this->phone_number = $data['phone_number'];
-            $this->network = $data['network'];
+            $this->network_code = $data['network_code'];
             $this->amount = $data['amount'];
             $this->status = false;
             $this->payment_id = $paymentId;

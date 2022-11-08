@@ -1,4 +1,5 @@
 
+
     $('#submit-file').on("click", function(e) {
         e.preventDefault();
         $('#files').parse({
@@ -21,10 +22,8 @@
     $('#collect-user-email').click(function(e){
         const type = $("#type").val();
         if(type == "airtime"){
-            console.log(type);
             validateAirtimeCsv();
         }else if(type=="data"){
-            console.log(type);
             validateDataCsv();
         }
     });
@@ -41,10 +40,19 @@
         const email = $('#email').val();
         const type = $("#type").val();
 
-        const data = JSON.stringify(convertToJson());
         if (validateEmail(email)) {
+
+            if(type == "airtime"){
+                const data = JSON.stringify( convertDataToJson());
                 makePayment(type, data, email);
-        } else {
+            }else if(type=="data"){
+                const data = JSON.stringify(convertUpdatedDataToJson());
+                makePayment(type, data, email);
+            } 
+
+           
+        }
+        else {
                 Swal.fire({
                         title:"Invalid email!",
                         icon: "error",
@@ -58,25 +66,49 @@
 function displayHTMLTable(results) {
     var table = "<table class='table table-bordered table-hover' id='tblData' style='width:100%; margin:0 auto;'>";
     var data = results.data;
+    console.log(data)
+    data.forEach(element => {
+        console.log(element.length != data[0].length);
+        if(element.length != data[0].length){
+            var index = data.indexOf(element);
+            data.splice(index)
+        }
+    });
+
+    console.log(data);
     for (i = 0; i < data.length; i++) {
         table += "<tr>";
         var row = data[i];
         var cells = row.join(",").split(",");
         for (j = 0; j < cells.length; j++) {
-            table += "<td>";
+            table += "<td>" ;
             table += cells[j];
-            table += "</th>";
+            table += "</td>";
         }
         table += "</tr>";
     }
     table += "</table>";
+
     $(".table-modal").html(table);
     $('#exampleModal').modal("show");
 }
 
-function convertToJson() {
+    function convertDataToJson() {
 
-    var table = document.getElementById("tblData");
+        var table = document.getElementById("tblData");
+        return  convertToJson(table);
+
+    }
+
+    function convertUpdatedDataToJson() {
+        var table = document.getElementById("updatedTblData");
+        return convertToJson(table);
+
+
+    }
+
+
+function convertToJson(table){
     console.log(table);
     var header = [];
     var rows = [];
@@ -94,8 +126,8 @@ function convertToJson() {
     }
 
     return rows;
-
 }
+
 
 function validateEmail(email) {
     const res =
@@ -174,8 +206,21 @@ function validateDataCsv(){
                     icon: "success",  
                     button:"close"
                 });
+
             $('#exampleModal').modal("hide");
-            $('#paymentModal').modal("show");
+
+            updateDataTable(function(response){
+                console.log(response);
+                appendDataToTable(response);
+                $('#updateTableModal').modal("show");
+            });
+            
+            $('#accept').on('click', () =>{
+                $('#updateTableModal').modal("hide");
+                $('#paymentModal').modal("show");
+            })
+
+        
          }
         
       });
@@ -184,7 +229,7 @@ function validateDataCsv(){
 
 
 function validatePhone(){
-    const data = convertToJson();
+    const data = convertDataToJson();
     const phone_number = [];
 
    Object.entries(data).forEach(([key, values]) => {
@@ -208,7 +253,7 @@ function validatePhone(){
 
 
 function validateCode(callback){
-    const data = convertToJson();
+    const data = convertDataToJson();
     const codes = [];
 
    Object.entries(data).forEach(([key, values]) => {
@@ -243,7 +288,7 @@ function validateCode(callback){
    function validateNetwork(){
     const network = ['MTN', "AIRTEL", "9MOBILE", "GLO"];
 
-    const data = convertToJson();
+    const data = convertDataToJson();
     const service = [];
 
    Object.entries(data).forEach(([key, values]) => {
@@ -264,7 +309,67 @@ function validateCode(callback){
 
    console.log(isService);
 
-   return isService;
+    return isService;
+
+   }
+
+   function updateDataTable(callback){
+    const data = convertDataToJson();
+    const codes = [];
+    const phone_number =[];
+
+   Object.entries(data).forEach(([key, values]) => {
+        codes.push(values['code']);   
+        phone_number.push(values['phone_number']);
+   });
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
+       $.ajax({
+        type: "POST",
+        url: "/data/update_table",
+        dataType: 'JSON',
+        data: {
+            'values': codes,
+            'phone': phone_number
+        },
+        beforeSend: function(){
+            Swal.showLoading();
+        },
+        complete: function(){
+            Swal.close();
+        },
+        success: callback,
+        error:  callback
+           
+    });
+
+   }
+
+   function appendDataToTable(responseData){
+   
+        var table = "<table class='table table-bordered table-hover' id='updatedTblData' style='width:100%; margin:0 auto;'>";
+   
+        console.log(responseData);
+        for (i = 0; i < responseData.length; i++) {
+            table += "<tr>";
+            var row = responseData[i];
+            var cells = row.join(",").split(",");
+            for (j = 0; j < cells.length; j++) {
+                table += "<td>" ;
+                table += cells[j];
+                table += "</td>";
+            }
+            table += "</tr>";
+        }
+        table += "</table>";
+    
+        $(".update-table-modal").html(table);
+        $("#updateTableModal").modal('show');
 
    }
 
