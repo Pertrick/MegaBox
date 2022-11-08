@@ -293,7 +293,7 @@ function validateCode(callback){
     const service = [];
 
    Object.entries(data).forEach(([key, values]) => {
-        service.push(values['service']);    
+        service.push(values['service'].toUpperCase());    
    });
 
    console.log(service);
