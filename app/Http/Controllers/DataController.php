@@ -63,7 +63,7 @@ class DataController extends Controller
         }
 
         if($check){
-            return response()->json('Error',400);
+            return response()->json('error',400);
         }else{
             return response()->json('validated',200);
         }
@@ -172,7 +172,7 @@ class DataController extends Controller
             DB::transaction(function () use ($email, $uploadedData, $reference, $total_amount): void {
 
                 $payment = new Payment();
-                $payment->savePayment("user$reference", $email, "data", $reference, 'NGN', $total_amount);
+                $payment->savePayment("user$reference", $email, "Data", $reference, 'NGN', $total_amount);
 
                 $paymentId = $payment->id;
                 foreach ($uploadedData as $value) {
