@@ -9,6 +9,9 @@ class Airtime extends Model
 {
     use HasFactory;
 
+    const PENDING = 0;
+    const SENT = 1;
+
     protected $fillable = [
         'email',
         'data'
@@ -24,5 +27,10 @@ class Airtime extends Model
 
         $this->save();
 
-}
+    }
+
+    public function scopePendingAirtimeStatus($query, $paymentId){
+       return $query->where('payment_id', $paymentId)
+                             ->where('status', self::PENDING);
+    }
 }

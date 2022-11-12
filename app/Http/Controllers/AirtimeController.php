@@ -47,7 +47,7 @@ class AirtimeController extends Controller
             DB::transaction(function () use ($email, $uploadedData, $reference, $total_amount): void {
 
                 $payment = new Payment();
-                $payment->savePayment("user$reference", $email, "Airtime", $reference, 'NGN', $total_amount);
+                $payment->savePayment("user$reference", $email, Payment::AIRTIME, $reference, 'NGN', $total_amount);
 
                 $paymentId =$payment->id;
                 foreach ($uploadedData as $value) {

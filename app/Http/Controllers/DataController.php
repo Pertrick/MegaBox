@@ -172,7 +172,7 @@ class DataController extends Controller
             DB::transaction(function () use ($email, $uploadedData, $reference, $total_amount): void {
 
                 $payment = new Payment();
-                $payment->savePayment("user$reference", $email, "Data", $reference, 'NGN', $total_amount);
+                $payment->savePayment("user$reference", $email, Payment::DATA, $reference, 'NGN', $total_amount);
 
                 $paymentId = $payment->id;
                 foreach ($uploadedData as $value) {
