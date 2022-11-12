@@ -2,102 +2,110 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\csvfile;
-use Illuminate\Support\Facades\Request;
-
+use App\Models\Payment;
+use App\Models\Airtime;
+use Illuminate\Support\Facades\DB;
+use App\Jobs\StartBuildJob;
+use Illuminate\Http\Request;
+use App\Actions\PaymentAction;
 class AirtimeController extends Controller
 {
-    private $datas = [];
-   public function preview(Request $request)
-   {
-    $path = $request->file('file')->getRealPath();
-        $records = array_map('str_getcsv', file($path));
+    public function index(){
+        return view('airtime');
+    }
 
-        if (! count($records) > 0) {
-           return 'Error...';
-        }
 
-        // Get field names from header column
-        $fields = array_map('strtolower', $records[0]);
-
-        // Remove the header column
-        array_shift($records);
-
-        foreach ($records as $record) {
-            if (count($fields) != count($record)) {
-                return 'csv_upload_invalid_data';
-            }
-
-            // Decode unwanted html entities
-            $record =  array_map("html_entity_decode", $record);
-
-            // Set the field name as key
-            $record = array_combine($fields, $record);
-
-            // Get the clean data
-                $datas = $this->clear_encoding_str($record);
-                 $datas = [$record];
-                //  dd($datas);
-                return view('airtime.preview', compact('datas'));
-        }
-
+      /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(PaymentAction $payment, Request $request)
+    {
         
-   }
+        $request->validate([
+            'email' => ['required', 'email'],
+            'data' => ['required', 'json'],
+        ]);
 
-   private $rows = [];
-    
-    public function index(Request $request)
-    {
-        $path = $request->file('file')->getRealPath();
-        $records = array_map('str_getcsv', file($path));
+        $total_amount = 0;
+        $email =$request->email;
+        $uploadedData = $request->data;
+        $uploadedData = Json_decode($uploadedData, true);
 
-        if (! count($records) > 0) {
-           return 'Error...';
+        foreach ($uploadedData as ["amount" => $amount]) {
+            $total_amount = $total_amount + $amount;
         }
 
-        // Get field names from header column
-        $fields = array_map('strtolower', $records[0]);
 
-        // Remove the header column
-        array_shift($records);
+        $payout = $payment->paymentCheckout($email,$total_amount);
+        $reference =$payout['reference'];
 
-        foreach ($records as $record) {
-            if (count($fields) != count($record)) {
-                return 'csv_upload_invalid_data';
-            }
+        if($payout){
 
-            // Decode unwanted html entities
-            $record =  array_map("html_entity_decode", $record);
+            DB::transaction(function () use ($email, $uploadedData, $reference, $total_amount): void {
 
-            // Set the field name as key
-            $record = array_combine($fields, $record);
+                $payment = new Payment();
+                $payment->savePayment("user$reference", $email, Payment::AIRTIME, $reference, 'NGN', $total_amount);
 
-            // Get the clean data
-            $this->rows[] = $this->clear_encoding_str($record);
+                $paymentId =$payment->id;
+                foreach ($uploadedData as $value) {
+                    $data = new Airtime();
+                    $data->saveAirtime($value, $email,$paymentId);
+                }
+                
+            });
+            
+            return response()->json($payout);
         }
 
-        foreach ($this->rows as $data) {
-            csvfile::create([
-               'name' => $data['name'],
-               'phone' => $data['phone'],
-               'network' => $data['network'],
-               'amount' => $data['amount'],
-            ]);
-        }
-         return redirect()->back()->with('status', 'CSV file uploaded Successfully!');
-        // return to_route('/');
     }
-    
-    private function clear_encoding_str($value)
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Data  $data
+     * @return \Illuminate\Http\Response
+     */
+    public function show()
     {
-        if (is_array($value)) {
-            $clean = [];
-            foreach ($value as $key => $val) {
-                $clean[$key] = mb_convert_encoding($val, 'UTF-8', 'UTF-8');
-            }
-            return $clean;
-        }
-        return mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+        
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Data  $data
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Data $data)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Data  $data
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Data $data)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Data  $data
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Data $data)
+    {
+        //
+    }
+   
 
 }

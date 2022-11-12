@@ -2,21 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\PaymentAction;
+use App\Actions\ServiceProviderAction;
 use App\Models\Data;
-use App\Models\datas;
-use App\Jobs\StartBuildJob;
+use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DataController extends Controller
 {
+   
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ServiceProviderAction $serviceProvider)
     {
-        //
+
+        $mtn = $serviceProvider->cachedMtn();
+        $airtel = $serviceProvider->cachedAirtel();
+        $glo = $serviceProvider->cachedGlo();
+        $etisalat = $serviceProvider->cachedEtisalat();
+
+        return view('data', compact('mtn', 'airtel', 'glo', 'etisalat'));
     }
 
     /**
@@ -24,9 +33,102 @@ class DataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function validateValues(ServiceProviderAction $serviceProvider, Request $request)
     {
-        //
+        $values = $request->values;
+    
+        if(empty($values)){
+            return response()->json('error',400);
+        }
+
+        $mtn = $serviceProvider->cachedMtn();
+        $airtel = $serviceProvider->cachedAirtel();
+        $glo = $serviceProvider->cachedGlo();
+        $etisalat = $serviceProvider->cachedEtisalat();
+       
+        $mergedArray =  array_merge($mtn, $airtel, $glo, $etisalat);
+
+        $arraycode =[];
+
+        foreach($mergedArray as $arrays){
+            array_push ($arraycode, $arrays['code']);
+        }
+
+        $check = false;
+      
+        foreach($values as $value){
+            if(!in_array($value, $arraycode)){
+                $check = true;
+            }
+        }
+
+        if($check){
+            return response()->json('error',400);
+        }else{
+            return response()->json('validated',200);
+        }
+
+        
+    }
+
+
+    public function updateTable(ServiceProviderAction $serviceProvider, Request $request)
+    {
+        $values = $request->values;
+        $phone = $request->phone;
+    
+        if(empty($values) && empty($phone)){
+            return response()->json('error',400);
+        }
+
+        $mtn = $serviceProvider->cachedMtn();
+        $airtel = $serviceProvider->cachedAirtel();
+        $glo = $serviceProvider->cachedGlo();
+        $etisalat = $serviceProvider->cachedEtisalat();
+       
+        $mergedArray =  array_merge($mtn, $airtel, $glo, $etisalat);
+
+        $dataArray =[];
+
+        foreach($mergedArray as $arrays){
+            array_push ($dataArray, [$arrays['code'],$arrays['amount']]);
+        }
+
+        $tableArray = [] ;
+      
+        foreach($values as $value){
+            foreach($dataArray as $array){
+                $key = array_search($value, $array);
+                if($key === false){
+                }else{
+                    array_push($tableArray, $array);
+                }
+
+            }
+        }
+
+        $cellArray = [];
+        $header = ['phone_number', 'network_code','amount'];
+
+        array_push($cellArray, $header);
+
+            foreach( $phone as $key1 => $value){
+                foreach($tableArray as $key2 => $table){
+                    if($key2 == $key1){
+                        array_unshift($table, $value);
+                        array_push($cellArray,$table);
+                    }
+                      
+                }
+            }
+
+        if(empty($tableArray)){
+            return response()->json('empty data table',400);
+        }else{
+            return response()->json($cellArray,200);
+        }
+
+        
     }
 
     /**
@@ -35,104 +137,55 @@ class DataController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PaymentAction $payment, Request $request)
     {
-        // $request->validate([
-        //     'email' => ['required', 'string'],
-        //     'data' => ['required', 'json'],
-        // ]);
-
-        // $uploadedData = Json_decode($request->data);
-
-        // $email = $request->email;
-
-        // $count = count($uploadedData);
-        // foreach($uploadedData as $value){
-            
-        //     $data = new datas();
-        //     $data->name = $value->name;
-        //     $data->phone = '08121326225';
-        //     $data->network = 'mtn';
-        //     $data->amount = '200';
-        //     $data->status = false;
-        //     $data->reference_code = "MEGA".rand();
-        //     $data->uploaded_by = $email;
-
-        //     $reference = $data->reference_code;
-
-           
-        // }
-
-//    dd($request->all());
-        try {
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-              CURLOPT_URL => "https://api.korapay.com/merchant/api/v1/charges/initialize",
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => "",
-              CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 30,
-              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => "POST",
-              CURLOPT_POSTFIELDS => "{\r\n    \"amount\": \"1000\",\r\n    \"redirect_url\": \"https://yourRedirectURL.com\",\r\n    \"currency\": \"NGN\",\r\n    \"reference\": \"ogochukwuebu34007\",\r\n    \"narration\": \"New payment\",\r\n    \"customer\": {\r\n        \"name\": \"prisca\",\r\n        \"email\": \"priscavincent2018@gmail.com\"\r\n    }\r\n}",
-              CURLOPT_HTTPHEADER => array(
-                "authorization: Bearer sk_test_YQzv7ubiFLmRwyCJCspRCtpkEZ8t5PprnzgC5cuG",
-                "cache-control: no-cache",
-                "content-type: application/json",
-                "postman-token: 283462cc-af04-13d3-1e18-1133fe29f0c9"
-              ),
-            ));
-            
-            $response = curl_exec($curl);
-
-            // dd($response);
-            $err = curl_error($curl);
-            
-            curl_close($curl);
-            
-            if ($err) {
-              echo "cURL Error #:" . $err;
-            } else {
-              echo $response;
-            }
-        }catch (\Exception $e){
-            return redirect()->back()->with('status', 'Fatai error while processing payment');
-        }
 
         $request->validate([
-            'email' => ['required', 'string'],
+            'email' => ['required', 'email'],
             'data' => ['required', 'json'],
         ]);
 
-        $uploadedData = Json_decode($request->data);
-
+        $total_amount = 0;
         $email = $request->email;
+        $uploadedData = trim($request->data);
 
-        $count = count($uploadedData);
-        foreach($uploadedData as $value){
-            
-            $data = new datas();
-            $data->name = $value->name;
-            $data->phone = '08121326225';
-            $data->network = 'mtn';
-            $data->amount = '200';
-            $data->status = false;
-            $data->reference_code = 'MEGABOX'.rand();
-            $data->uploaded_by = $email;
+        $uploadedData = Json_decode($uploadedData, true);
+        // dd($uploadedData[0]["phone_number"]);
+        //for phone validation
+        foreach ($uploadedData as ["phone_number" => $phone]) {
 
-            if($data->save()){
-                $count--;
+            $validated = [$phone => 'required|numeric|min:11'];
+            if (!$validated) {
+                return redirect()->back()->with("message", "Phone number must be up to 11 digit");
             }
         }
 
-        if($count == 0){
-            return response()->json(['success' => $count]);
+        foreach ($uploadedData as ["amount" => $amount]) {
+            $total_amount = $total_amount + $amount;
         }
-    }
 
-       
-    
+        $payout = $payment->paymentCheckout($email, $total_amount);
+        $reference = $payout['reference'];
+
+        if ($payout) {
+
+            DB::transaction(function () use ($email, $uploadedData, $reference, $total_amount): void {
+
+                $payment = new Payment();
+                $payment->savePayment("user$reference", $email, Payment::DATA, $reference, 'NGN', $total_amount);
+
+                $paymentId = $payment->id;
+                foreach ($uploadedData as $value) {
+                    $data = new Data();
+                    $data->saveData($value, $email, $paymentId);
+                }
+
+            });
+
+            return response()->json($payout);
+        }
+
+    }
 
     /**
      * Display the specified resource.
@@ -140,9 +193,9 @@ class DataController extends Controller
      * @param  \App\Models\Data  $data
      * @return \Illuminate\Http\Response
      */
-    public function show(Data $data)
+    public function show()
     {
-        //
+
     }
 
     /**

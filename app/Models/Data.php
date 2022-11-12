@@ -9,24 +9,27 @@ class Data extends Model
 {
     use HasFactory;
 
-    public function saveData($uploadedData,$email){
-         
-        $uploadedData = Json_decode($uploadedData);
+    const PENDING = 0;
+    const SENT = 1;
 
-        $count = count($uploadedData);
-        foreach($uploadedData as $value){
-            $this->phone_number = $value->phone_number;
-            $this->network = $value->network;
-            $this->amount = $value->amount;
+    protected $fillable =[
+        'email',
+        'data'
+    ];
+
+    public function saveData($data,$email, $paymentId){
+            $this->phone_number = $data['phone_number'];
+            $this->network_code = $data['network_code'];
+            $this->amount = $data['amount'];
             $this->status = false;
+            $this->payment_id = $paymentId;
             $this->uploaded_by = $email;
 
-            if($this->save()){
-                $count--;
-             
-            }
-
-
-        }
+            $this->save();
     }
+
+    public function scopePendingDataStatus($query, $paymentId){
+        return $query->where('payment_id', $paymentId)
+                              ->where('status', self::PENDING);
+     }
 }

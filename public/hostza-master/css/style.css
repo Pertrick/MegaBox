@@ -24,6 +24,8 @@ body {
   font-family: "Roboto", sans-serif;
   font-weight: normal;
   font-style: normal;
+  /* background: rgba(255, 245, 245, 0.5) url(hostza-master/img/Spinner-1s-200px.gif) center no-repeat; */
+
 }
 
 /* line 11, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_reset.scss */
@@ -1147,6 +1149,26 @@ h3 {
 /* line 1, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_slider.scss */
 .slider_bg_1 {
   background-image: url(../img/banner/banner.png);
+  background-position: center;
+  background-size: cover;
+}
+
+.airtime {
+  background-image: url(/images/airtime.jpg);
+  background-position: center;
+  background-size: cover;
+}
+
+.data{
+  background-image: url(/images/data.jpg);
+  background-position: center;
+  background-size: cover;
+}
+
+.welcome{
+    background-image: url(/images/my-banner.jpg);
+    background-position: center;
+    background-size: cover;
 }
 
 /* line 5, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_slider.scss */
@@ -1309,6 +1331,11 @@ h3 {
   border-radius: 5px;
   padding: 29px 23px;
   margin-bottom: 30px;
+}
+
+.prising_area .single_prising:hover {
+  border: 1px solid #2E004B;
+
 }
 
 /* line 22, C:/Users/SPN Graphics/Desktop/cl sep/HTML/scss/_prising.scss */

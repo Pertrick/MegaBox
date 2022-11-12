@@ -9,6 +9,11 @@ class Payment extends Model
 {
     use HasFactory;
 
+    const AIRTIME = "airtime";
+    const DATA ="data";
+    const PENDING = "pending";
+    const SUCCESS = "success";
+
 
     public function savePayment($user,$email,$service, $reference, $naira, $amount){
         $this->user = $user;
@@ -20,5 +25,17 @@ class Payment extends Model
         
         $this->save();
 
+    }
+
+    public function scopeSuccessAirtimePaymentId($query){
+        return $query->where('status', self::SUCCESS)
+                      ->where('service', self::AIRTIME)
+                      ->pluck('id');
+    }
+
+    public function scopeSuccessDataPaymentId($query){
+        return $query->where('status', self::SUCCESS)
+                      ->where('service', self::DATA)
+                      ->pluck('id');
     }
 }
