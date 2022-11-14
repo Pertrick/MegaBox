@@ -150,6 +150,11 @@ class DataController extends Controller
         $uploadedData = trim($request->data);
 
         $uploadedData = Json_decode($uploadedData, true);
+
+        foreach ($uploadedData as ["network_code" => $code]) {
+            $codes = $code;
+        }
+        // dd($codes);
         // dd($uploadedData[0]["phone_number"]);
         //for phone validation
         foreach ($uploadedData as ["phone_number" => $phone]) {
@@ -166,7 +171,7 @@ class DataController extends Controller
 
         $payout = $payment->paymentCheckout($email, $total_amount);
         $reference = $payout['reference'];
-
+// dd($payout);
         if ($payout) {
 
             DB::transaction(function () use ($email, $uploadedData, $reference, $total_amount): void {
@@ -181,8 +186,34 @@ class DataController extends Controller
                 }
 
             });
-
             return response()->json($payout);
+
+            $curl = curl_init();
+        
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => 'https://test.mcd.5starcompany.com.ng/api/reseller/pay',
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'POST',
+              CURLOPT_POSTFIELDS =>'{
+                "service": "data",
+                "coded": " ' . $codes . ' ",
+                "phone": " ' . $phone . ' "
+            }',
+              CURLOPT_HTTPHEADER => array(
+                'Authorization: mcd_key_fertyuilokmjnhgft56789807675434265fd',
+                'Content-Type: application/json'
+              ),
+            ));
+            
+            $response = curl_exec($curl);
+            
+            curl_close($curl);
+            // echo $response;
         }
 
     }
