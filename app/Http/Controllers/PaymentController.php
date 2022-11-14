@@ -15,17 +15,27 @@ class PaymentController extends Controller
      */
     public function verifyPayment(PaymentAction $payment, Request $request)
     {
+        $referenceId =  $request->query('reference');
         $verifyPayment = $payment->verify($request);
         // $getdetails = $payment->paymentCheckout($request->data);
         // dd($getdetails);
 
-        if ($verifyPayment) {
-            return redirect('/')->with('message', 'Payment confirmed successfully.');
+        if($verifyPayment){
+            return redirect()->route('redirectpage', $referenceId);
+        }else{
+            return redirect()->route('redirectpage', $referenceId);
         }
-        
        
-
-        return redirect('/')->with('message', 'Processing Payment!. You will recieved a confirmation message, when it is done.');
     }
 
+    public function redirectPage($referenceId){
+        
+        $payment = Payment::where('reference_id', $referenceId)->first();
+
+        return view('successpage', compact('payment'));
+    }
+
+
+    
+   
 }

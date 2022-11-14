@@ -103,6 +103,8 @@
                         <p class="prising_text">Fast and quick response for Bulk airtime distribution for all Networks
                         </p>
                         <p class="prise">From as low as<span>&#8358;50</span></p>
+                        <p class="prise">Maximum amount:<span>&#8358;5000</span></p>
+                        
                         <!-- <a href="/" class="boxed_btn_green2">Start Now</a> -->
                     </div>
                 </div>

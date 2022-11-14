@@ -7,7 +7,8 @@ use App\Models\Airtime;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+// use Illuminate\Http\Request;
+// use App\Actions\PaymentAction;
 class AirtimeController extends Controller
 {
     public function index()
@@ -34,13 +35,13 @@ class AirtimeController extends Controller
         $uploadedData = $request->data;
         $uploadedData = Json_decode($uploadedData, true);
 
-        foreach ($uploadedData as ["service" => $service]) {
-            $serv = $service;
-        }
+        // foreach ($uploadedData as ["service" => $service]) {
+        //     $serv = $service;
+        // }
 
-        foreach ($uploadedData as ["phone_number" => $phone]) {
-            $phones = $phone;
-        }
+        // foreach ($uploadedData as ["phone_number" => $phone]) {
+        //     $phones = $phone;
+        // }
 
         // $phone =  $uploadedData[0]["phone_number"];
 
@@ -57,7 +58,7 @@ class AirtimeController extends Controller
             DB::transaction(function () use ($email, $uploadedData, $reference, $total_amount): void {
 
                 $payment = new Payment();
-                $payment->savePayment("user$reference", $email, "data", $reference, 'NGN', $total_amount);
+                $payment->savePayment("user$reference", $email, Payment::AIRTIME, $reference, 'NGN', $total_amount);
 
                 $paymentId = $payment->id;
                 foreach ($uploadedData as $value) {
@@ -68,35 +69,6 @@ class AirtimeController extends Controller
             });
 
             return response()->json($payout);
-
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://test.mcd.5starcompany.com.ng/api/reseller/pay',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => '{
-                "service" : "airtime",
-                "coded": " ' . $serv . ' ",
-                "phone": " ' . $phones . ' ",
-                "amount": " ' . $amount . ' ",
-                "reseller_price":" ' . $amount . ' "
-            }',
-                CURLOPT_HTTPHEADER => array(
-                    'Authorization: mcd_key_fertyuilokmjnhgft56789807675434265fd',
-                    'Content-Type: application/json',
-                ),
-            ));
-
-            $response = curl_exec($curl);
-
-            curl_close($curl);
-            // dd($response);
         }
 
     }
@@ -118,7 +90,7 @@ class AirtimeController extends Controller
      * @param  \App\Models\Data  $data
      * @return \Illuminate\Http\Response
      */
-    public function edit(Data $data)
+    public function edit(Airtime $airtime)
     {
         //
     }
@@ -130,7 +102,7 @@ class AirtimeController extends Controller
      * @param  \App\Models\Data  $data
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Data $data)
+    public function update(Request $request, Airtime $airtime)
     {
         //
     }
@@ -141,7 +113,7 @@ class AirtimeController extends Controller
      * @param  \App\Models\Data  $data
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Data $data)
+    public function destroy(Airtime $airtime)
     {
         //
     }

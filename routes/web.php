@@ -67,6 +67,8 @@ Route::post('payment/checkout', [PaymentController::class, 'checkout'])->name('p
 
 Route::get('/verify', [PaymentController::class, 'verifyPayment'])->name('payment.verify');
 
+Route::get('/payment_confirmation/{id}', [PaymentController::class, 'redirectPage'])->name('redirectpage');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');

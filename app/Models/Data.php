@@ -9,6 +9,9 @@ class Data extends Model
 {
     use HasFactory;
 
+    const PENDING = 0;
+    const SENT = 1;
+
     protected $fillable =[
         'email',
         'data'
@@ -23,6 +26,10 @@ class Data extends Model
             $this->uploaded_by = $email;
 
             $this->save();
-
     }
+
+    public function scopePendingDataStatus($query, $paymentId){
+        return $query->where('payment_id', $paymentId)
+                              ->where('status', self::PENDING);
+     }
 }

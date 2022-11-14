@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Success page</title>
-
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-<style type="text/css">
+@include('partials.header')
+    <style type="text/css">
 
     body
     {
@@ -18,13 +9,12 @@
     .payment
 	{
 		border:1px solid #f2f2f2;
-		height:280px;
         border-radius:20px;
         background:#fff;
 	}
    .payment_header
    {
-	   background:rgba(255,102,0,1);
+	   background:#2E004B;;
 	   padding:20px;
        border-radius:20px 20px 0px 0px;
 	   
@@ -52,31 +42,10 @@
         text-align:center;
     }
 
-    .content  h1
-    {
-        font-size:25px;
-        padding-top:25px;
+    .content h5{
+        padding:10px 0;
     }
-
-    .content a
-    {
-        width:200px;
-        height:35px;
-        color:#fff;
-        border-radius:30px;
-        padding:5px 10px;
-        background:rgba(255,102,0,1);
-        transition:all ease-in-out 0.3s;
-    }
-
-    .content a:hover
-    {
-        text-decoration:none;
-        background:#000;
-    }
-   
 </style>
-</head>
 <body>
     <div class="container">
    <div class="row">
@@ -86,9 +55,13 @@
                <div class="check"><i class="fa fa-check" aria-hidden="true"></i></div>
             </div>
             <div class="content">
-               <h1>Payment Success !</h1>
-               <p>Your payment was receive</p>
-               <a href="{{ url('/') }}">Go to Home</a>
+               <h2 class="pt-5">Payment Success !</h2>
+               <h5>Email: <span class="font-weight-bold">{{$payment->email}}</span></h5>
+               <h5>Reference Id: <span class="font-weight-bold">{{$payment->reference_id}}</span></h5>
+               <h5>Service: <span class="font-weight-bold">Bulk {{$payment->service}} </span></h5>
+               <h5>Amount: &#8358; <span class="font-weight-bold">{{number_format($payment->amount,3)}}</span></h5>
+
+               <a href="{{ url('/') }}" class="btn btn-outline-warning m-5">Return back Home</a>
             </div>
             
          </div>
