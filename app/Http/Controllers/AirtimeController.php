@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Models\Airtime;
 use Illuminate\Support\Facades\DB;
-use App\Jobs\StartBuildJob;
 use Illuminate\Http\Request;
 use App\Actions\PaymentAction;
 class AirtimeController extends Controller
@@ -79,7 +78,7 @@ class AirtimeController extends Controller
      * @param  \App\Models\Data  $data
      * @return \Illuminate\Http\Response
      */
-    public function edit(Data $data)
+    public function edit(Airtime $airtime)
     {
         //
     }
@@ -91,7 +90,7 @@ class AirtimeController extends Controller
      * @param  \App\Models\Data  $data
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Data $data)
+    public function update(Request $request, Airtime $airtime)
     {
         //
     }
@@ -102,7 +101,7 @@ class AirtimeController extends Controller
      * @param  \App\Models\Data  $data
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Data $data)
+    public function destroy(Airtime $airtime)
     {
         //
     }

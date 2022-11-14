@@ -44,8 +44,8 @@ class PurchaseData
             dd($response);
 
             if($response['success'] == 1){
-               $airtime = Airtime::where('id',$id)->first();
-               $airtime->status = Airtime::SENT;
+               $airtime = Data::where('id',$id)->first();
+               $airtime->status = Data::SENT;
                $airtime->save();
             }
         }
