@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\PaymentAction;
 use Illuminate\Http\Request;
+use App\Models\Payment;
 
 class PaymentController extends Controller
 {
@@ -17,9 +18,7 @@ class PaymentController extends Controller
     {
         $referenceId =  $request->query('reference');
         $verifyPayment = $payment->verify($request);
-        // $getdetails = $payment->paymentCheckout($request->data);
-        // dd($getdetails);
-
+       
         if($verifyPayment){
             return redirect()->route('redirectpage', $referenceId);
         }else{

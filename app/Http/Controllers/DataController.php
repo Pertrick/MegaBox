@@ -150,28 +150,14 @@ class DataController extends Controller
         $uploadedData = trim($request->data);
 
         $uploadedData = Json_decode($uploadedData, true);
-
-        // foreach ($uploadedData as ["network_code" => $code]) {
-        //     $codes = $code;
-        // }
-        // dd($codes);
-        // dd($uploadedData[0]["phone_number"]);
-        //for phone validation
-        foreach ($uploadedData as ["phone_number" => $phone]) {
-
-            $validated = [$phone => 'required|numeric|min:11'];
-            if (!$validated) {
-                return redirect()->back()->with("message", "Phone number must be up to 11 digit");
-            }
-        }
-
+    
         foreach ($uploadedData as ["amount" => $amount]) {
             $total_amount = $total_amount + $amount;
         }
 
         $payout = $payment->paymentCheckout($email, $total_amount);
         $reference = $payout['reference'];
-// dd($payout);
+        
         if ($payout) {
 
             DB::transaction(function () use ($email, $uploadedData, $reference, $total_amount): void {

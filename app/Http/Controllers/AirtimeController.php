@@ -7,8 +7,6 @@ use App\Models\Airtime;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-// use Illuminate\Http\Request;
-// use App\Actions\PaymentAction;
 class AirtimeController extends Controller
 {
     public function index()
@@ -35,20 +33,9 @@ class AirtimeController extends Controller
         $uploadedData = $request->data;
         $uploadedData = Json_decode($uploadedData, true);
 
-        // foreach ($uploadedData as ["service" => $service]) {
-        //     $serv = $service;
-        // }
-
-        // foreach ($uploadedData as ["phone_number" => $phone]) {
-        //     $phones = $phone;
-        // }
-
-        // $phone =  $uploadedData[0]["phone_number"];
-
         foreach ($uploadedData as ["amount" => $amount]) {
             $total_amount = $total_amount + $amount;
         }
-        // dd($amount);
 
         $payout = $payment->paymentCheckout($email, $total_amount);
         $reference = $payout['reference'];
