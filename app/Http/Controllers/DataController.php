@@ -150,6 +150,11 @@ class DataController extends Controller
         $uploadedData = trim($request->data);
 
         $uploadedData = Json_decode($uploadedData, true);
+
+        // foreach ($uploadedData as ["network_code" => $code]) {
+        //     $codes = $code;
+        // }
+        // dd($codes);
         // dd($uploadedData[0]["phone_number"]);
         //for phone validation
         foreach ($uploadedData as ["phone_number" => $phone]) {
@@ -166,7 +171,7 @@ class DataController extends Controller
 
         $payout = $payment->paymentCheckout($email, $total_amount);
         $reference = $payout['reference'];
-
+// dd($payout);
         if ($payout) {
 
             DB::transaction(function () use ($email, $uploadedData, $reference, $total_amount): void {
@@ -181,7 +186,6 @@ class DataController extends Controller
                 }
 
             });
-
             return response()->json($payout);
         }
 

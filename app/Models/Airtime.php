@@ -21,7 +21,7 @@ class Airtime extends Model
 
     public function saveAirtime($airtime,$email, $paymentId){
         $this->phone_number = $airtime['phone_number'];
-        $this->network = $airtime['service'];
+        $this->service = $airtime['service'];
         $this->amount = $airtime['amount'];
         $this->status = false;
         $this->payment_id = $paymentId;
