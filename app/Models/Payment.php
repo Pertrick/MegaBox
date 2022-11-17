@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Airtime;
+USE App\Models\Data;
 
 class Payment extends Model
 {
@@ -25,17 +27,5 @@ class Payment extends Model
         
         $this->save();
 
-    }
-
-    public function scopeSuccessAirtimePaymentId($query){
-        return $query->where('status', self::SUCCESS)
-                      ->where('service', self::AIRTIME)
-                      ->pluck('id');
-    }
-
-    public function scopeSuccessDataPaymentId($query){
-        return $query->where('status', self::SUCCESS)
-                      ->where('service', self::DATA)
-                      ->pluck('id');
     }
 }

@@ -9,7 +9,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Airtime;
-use App\Models\Payment;
 use App\Actions\PurchaseAirtime;
 
 class ProcessAirtime implements ShouldQueue
@@ -32,10 +31,10 @@ class ProcessAirtime implements ShouldQueue
      *
      * @return void
      */
-    public function handle(PurchaseAirtime $purchaseAirtime)
+    public function handle(Airtime $airtime,PurchaseAirtime $purchaseAirtime)
     {
-        $payment_id = Payment::successAirtimePaymentId()->first();
-        $airtimes  = Airtime::pendingAirtimeStatus($payment_id)->get(['id','phone_number','network','amount']);
+     
+        $airtimes = $airtime->successfulAirtimePayment;
         $response = $purchaseAirtime->buyAirtime($airtimes);
     }
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('network');
             $table->string('amount');
             $table->string('status');
+            $table->timestamp('sent_at')->nullable();
             $table->string('uploaded_by');
             $table->timestamps();
         });
