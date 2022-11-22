@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Actions;
-use App\Models\airtimes;
-use App\Models\Data;
-use App\Models\Airtime;
 use App\Models\Payment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Jobs\ProcessAirtime;
+use App\Jobs\ProcessData;
 
 class PaymentAction
 {
@@ -81,6 +79,12 @@ class PaymentAction
         if ($rep['status'] == true) {
             $payment = Payment::where('reference_id', $rep['data']['reference']);
             if ($payment->pluck('status')->first() == "success") {
+                if($payment->service == Payment::AIRTIME){
+                    ProcessAirtime::dispatch($payment->id);
+                }elseif($payment->service == Payment::DATA){
+                    ProcessData::dispatch($payment->id);
+                }
+                
                 return true;
             }
             return false;

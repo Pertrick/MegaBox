@@ -21,7 +21,7 @@ class Airtime extends Model
 
     public function saveAirtime($airtime,$email, $paymentId){
         $this->phone_number = $airtime['phone_number'];
-        $this->service = $airtime['service'];
+        $this->network = $airtime['service'];
         $this->amount = $airtime['amount'];
         $this->status = false;
         $this->payment_id = $paymentId;
@@ -32,16 +32,28 @@ class Airtime extends Model
     }
 
 
-    public function getSuccessfulAirtimePaymentAttribute(){
-     return  DB::table('airtimes')
-        ->join('payments', 'payments.id', '=', 'airtimes.payment_id')
-        ->where('payments.status', '=', 'success')
-        ->where('payments.service', '=', 'airtime')
-        ->where('airtimes.status', '=', Airtime::PENDING)
-        ->select('airtimes.id', 'airtimes.phone_number','airtimes.network','airtimes.amount')
-        ->get();
+    // public function getSuccessfulAirtimePaymentAttribute(){
+    //  return  DB::table('airtimes')
+    //     ->join('payments', 'payments.id', '=', 'airtimes.payment_id')
+    //     ->where('payments.status', '=', 'success')
+    //     ->where('payments.service', '=', 'airtime')
+    //     ->where('airtimes.status', '=', Airtime::PENDING)
+    //     ->select('airtimes.id', 'airtimes.phone_number','airtimes.network','airtimes.amount')
+    //     ->get();
 
-    }
+    // }
+
+    public function getSuccessfulAirtimePaymentIdAttribute($id){
+        return  DB::table('airtimes')
+           ->join('payments', 'payments.id', '=', 'airtimes.payment_id')
+           ->where('payments.status', '=', 'success')
+           ->where('payments.service', '=', 'airtime')
+           ->where('airtimes.status', '=', Airtime::PENDING)
+           ->where('airtimes.payment_id', '=', $id)
+           ->select('airtimes.id', 'airtimes.phone_number','airtimes.network','airtimes.amount')
+           ->get();
+   
+       }
 
     public function payment(){
         return $this->belongsTo(Payment::class);

@@ -22,7 +22,6 @@ class AirtimeController extends Controller
      */
     public function store(PaymentAction $payment, Request $request)
     {
-
         $request->validate([
             'email' => ['required', 'email'],
             'data' => ['required', 'json'],

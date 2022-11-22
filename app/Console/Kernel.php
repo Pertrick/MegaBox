@@ -20,8 +20,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->job(new ProcessAirtime)->everyMinute();
-        $schedule->job(new ProcessData)->everyMinute();
+        // $schedule->job(new ProcessAirtime)->everyMinute();
+        // $schedule->job(new ProcessData)->everyMinute();
         $schedule->command('process-airtime:run')->everyMinute();
         $schedule->command('process-data:run')->everyMinute();
      

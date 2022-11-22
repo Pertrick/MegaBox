@@ -2,7 +2,6 @@
 
 namespace App\Actions;
 use App\Models\Airtime;
-use App\Models\Payment;
 use Carbon\Carbon;
 
 class PurchaseAirtime

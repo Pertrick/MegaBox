@@ -14,15 +14,15 @@ use App\Actions\PurchaseData;
 class ProcessData implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    public $paymentId;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($paymentId)
     {
-        //
+        $this->paymentId = $paymentId;
     }
 
     /**
@@ -32,7 +32,7 @@ class ProcessData implements ShouldQueue
      */
     public function handle(Data $data, PurchaseData $purchaseData)
     {
-        $data  = $data->successfulDataPayment;
+        $data  = $data->successfulDataPayment($this->paymentId);
         $response = $purchaseData->buyData($data);
     }
 }

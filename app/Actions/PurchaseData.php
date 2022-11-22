@@ -4,7 +4,6 @@ namespace App\Actions;
 use App\Models\Data;
 use Carbon\Carbon;
 
-
 class PurchaseData
 {
 

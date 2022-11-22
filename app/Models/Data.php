@@ -30,12 +30,13 @@ class Data extends Model
             $this->save();
     }
 
-    public function getSuccessfulDataPaymentAttribute(){
+    public function getSuccessfulDataPaymentAttribute($id){
         return  DB::table('data')
            ->join('payments', 'payments.id', '=', 'data.payment_id')
            ->where('payments.status', '=', 'success')
            ->where('payments.service', '=', 'data')
-           ->where('data.status', '=', Data::PENDING)
+           ->where('data.status', '=', self::PENDING)
+           ->where('data.payment_id', '=', $id)
            ->select('data.id', 'data.phone_number','data.network_code')
            ->get();
    
