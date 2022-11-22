@@ -2,19 +2,18 @@
 
 namespace App\Actions;
 use App\Models\Airtime;
-use App\Models\Payment;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
 
 class PurchaseAirtime
 {
 
     public function buyAirtime($airtimes)
     {   
-        foreach($airtimes as ['id' => $id, 'phone_number' => $phone_number, 'network' => $network, 'amount' => $amount]){
-
-            $coded = $this->coded($network);
+        foreach($airtimes as $airtime){
+            $id = $airtime->id;
+            $coded = $this->coded($airtime->network);
+            $phone_number = $airtime->phone_number;
+            $amount = $airtime->amount;
 
             $curl = curl_init();
   
@@ -34,7 +33,7 @@ class PurchaseAirtime
                 "amount": "' . $amount .'"
             }',
               CURLOPT_HTTPHEADER => array(
-                'Authorization: mcd_key_fertyuilokmjnhgft56789807675434265fd',
+                'Authorization: ' . env('MCD_PAYMENT_KEY'). '',
                 'Content-Type: application/json'
               ),
             ));
@@ -44,11 +43,10 @@ class PurchaseAirtime
     
             $response = json_decode($response, true);
 
-            dd($response);
-
             if($response['success'] == 1){
                $airtime = Airtime::where('id',$id)->first();
                $airtime->status = Airtime::SENT;
+               $airtime->sent_at = Carbon::now();
                $airtime->save();
             }
         }

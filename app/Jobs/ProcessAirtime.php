@@ -9,22 +9,22 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Airtime;
-use App\Models\Payment;
 use App\Actions\PurchaseAirtime;
+use Illuminate\Support\Facades\Log;
 
 class ProcessAirtime implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $payment;
+    public $paymentId;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($paymentId)
     {
-        
+        $this->paymentId = $paymentId;
     }
 
     /**
@@ -32,10 +32,12 @@ class ProcessAirtime implements ShouldQueue
      *
      * @return void
      */
-    public function handle(PurchaseAirtime $purchaseAirtime)
+    public function handle(Airtime $airtime,PurchaseAirtime $purchaseAirtime)
     {
-        $payment_id = Payment::successAirtimePaymentId()->first();
-        $airtimes  = Airtime::pendingAirtimeStatus($payment_id)->get(['id','phone_number','network','amount']);
+        Log::info("processing");
+        $airtimes = $airtime->successfulAirtimePayment($this->paymentId);
+        dd($airtimes);
+        Log::info("airtime Processing");
         $response = $purchaseAirtime->buyAirtime($airtimes);
     }
 }

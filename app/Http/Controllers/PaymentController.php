@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
-use Illuminate\Http\Request;
 use App\Actions\PaymentAction;
+use Illuminate\Http\Request;
+use App\Models\Payment;
 
 class PaymentController extends Controller
 {
-   
+
     /**
      * Show the form for creating a new resource.
      *
@@ -18,7 +18,7 @@ class PaymentController extends Controller
     {
         $referenceId =  $request->query('reference');
         $verifyPayment = $payment->verify($request);
-
+       
         if($verifyPayment){
             return redirect()->route('redirectpage', $referenceId);
         }else{

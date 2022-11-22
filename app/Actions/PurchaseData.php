@@ -2,17 +2,17 @@
 
 namespace App\Actions;
 use App\Models\Data;
-use App\Models\Payment;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
 
 class PurchaseData
 {
 
     public function buyData($data)
     {   
-        foreach($data as ['id' => $id, 'phone_number' => $phone_number, 'network_code' => $network_code]){
+        foreach($data as $value){
+            $id =$value->id;
+            $network_code = $value->network_code;
+            $phone_number = $value->phone_number;
 
             $curl = curl_init();
   
@@ -25,13 +25,13 @@ class PurchaseData
               CURLOPT_FOLLOWLOCATION => true,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => 'POST',
-              CURLOPT_POSTFIELDS =>'{
-                "service":"data",
-                "coded": "' .$network_code .'",
-                "phone": "' . $phone_number .'",
+              CURLOPT_POSTFIELDS =>' {
+                 "service":"data",
+                 "coded": "'.$network_code.'",
+                 "phone": "'.$phone_number.'"
             }',
               CURLOPT_HTTPHEADER => array(
-                'Authorization: mcd_key_fertyuilokmjnhgft56789807675434265fd',
+                'Authorization: ' . env('MCD_PAYMENT_KEY'). '',
                 'Content-Type: application/json'
               ),
             ));
@@ -41,12 +41,11 @@ class PurchaseData
     
             $response = json_decode($response, true);
 
-            dd($response);
-
             if($response['success'] == 1){
-               $airtime = Airtime::where('id',$id)->first();
-               $airtime->status = Airtime::SENT;
-               $airtime->save();
+               $data = Data::where('id', $id)->first();
+               $data->status = Data::SENT;
+               $data->sent_at = Carbon::now();
+               $data->save();
             }
         }
 

@@ -9,21 +9,20 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Data;
-use App\Models\Payment;
 use App\Actions\PurchaseData;
 
 class ProcessData implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    public $paymentId;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($paymentId)
     {
-        //
+        $this->paymentId = $paymentId;
     }
 
     /**
@@ -31,11 +30,9 @@ class ProcessData implements ShouldQueue
      *
      * @return void
      */
-    public function handle(PurchaseData $purchaseData)
+    public function handle(Data $data, PurchaseData $purchaseData)
     {
-        $payment_id = Payment::successDataPaymentId()->first();
-        $data  = Data::pendingDataStatus($payment_id)->get(['id','phone_number','network_code']);
-
+        $data  = $data->successfulDataPayment($this->paymentId);
         $response = $purchaseData->buyData($data);
     }
 }

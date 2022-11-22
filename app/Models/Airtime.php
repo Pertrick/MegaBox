@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Payment;
+use Illuminate\Support\Facades\DB;
 
 class Airtime extends Model
 {
@@ -29,8 +31,31 @@ class Airtime extends Model
 
     }
 
-    public function scopePendingAirtimeStatus($query, $paymentId){
-       return $query->where('payment_id', $paymentId)
-                             ->where('status', self::PENDING);
+
+    // public function getSuccessfulAirtimePaymentAttribute(){
+    //  return  DB::table('airtimes')
+    //     ->join('payments', 'payments.id', '=', 'airtimes.payment_id')
+    //     ->where('payments.status', '=', 'success')
+    //     ->where('payments.service', '=', 'airtime')
+    //     ->where('airtimes.status', '=', Airtime::PENDING)
+    //     ->select('airtimes.id', 'airtimes.phone_number','airtimes.network','airtimes.amount')
+    //     ->get();
+
+    // }
+
+    public function getSuccessfulAirtimePaymentIdAttribute($id){
+        return  DB::table('airtimes')
+           ->join('payments', 'payments.id', '=', 'airtimes.payment_id')
+           ->where('payments.status', '=', 'success')
+           ->where('payments.service', '=', 'airtime')
+           ->where('airtimes.status', '=', Airtime::PENDING)
+           ->where('airtimes.payment_id', '=', $id)
+           ->select('airtimes.id', 'airtimes.phone_number','airtimes.network','airtimes.amount')
+           ->get();
+   
+       }
+
+    public function payment(){
+        return $this->belongsTo(Payment::class);
     }
 }

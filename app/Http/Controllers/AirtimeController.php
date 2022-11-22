@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
-use App\Models\Airtime;
-use Illuminate\Support\Facades\DB;
-use App\Jobs\StartBuildJob;
-use Illuminate\Http\Request;
 use App\Actions\PaymentAction;
+use App\Models\Airtime;
+use App\Models\Payment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 class AirtimeController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('airtime');
     }
 
-
-      /**
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -23,14 +22,13 @@ class AirtimeController extends Controller
      */
     public function store(PaymentAction $payment, Request $request)
     {
-        
         $request->validate([
             'email' => ['required', 'email'],
             'data' => ['required', 'json'],
         ]);
 
         $total_amount = 0;
-        $email =$request->email;
+        $email = $request->email;
         $uploadedData = $request->data;
         $uploadedData = Json_decode($uploadedData, true);
 
@@ -38,25 +36,24 @@ class AirtimeController extends Controller
             $total_amount = $total_amount + $amount;
         }
 
+        $payout = $payment->paymentCheckout($email, $total_amount);
+        $reference = $payout['reference'];
 
-        $payout = $payment->paymentCheckout($email,$total_amount);
-        $reference =$payout['reference'];
-
-        if($payout){
+        if ($payout) {
 
             DB::transaction(function () use ($email, $uploadedData, $reference, $total_amount): void {
 
                 $payment = new Payment();
                 $payment->savePayment("user$reference", $email, Payment::AIRTIME, $reference, 'NGN', $total_amount);
 
-                $paymentId =$payment->id;
+                $paymentId = $payment->id;
                 foreach ($uploadedData as $value) {
                     $data = new Airtime();
-                    $data->saveAirtime($value, $email,$paymentId);
+                    $data->saveAirtime($value, $email, $paymentId);
                 }
-                
+
             });
-            
+
             return response()->json($payout);
         }
 
@@ -70,7 +67,7 @@ class AirtimeController extends Controller
      */
     public function show()
     {
-        
+
     }
 
     /**
@@ -79,7 +76,7 @@ class AirtimeController extends Controller
      * @param  \App\Models\Data  $data
      * @return \Illuminate\Http\Response
      */
-    public function edit(Data $data)
+    public function edit(Airtime $airtime)
     {
         //
     }
@@ -91,7 +88,7 @@ class AirtimeController extends Controller
      * @param  \App\Models\Data  $data
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Data $data)
+    public function update(Request $request, Airtime $airtime)
     {
         //
     }
@@ -102,10 +99,9 @@ class AirtimeController extends Controller
      * @param  \App\Models\Data  $data
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Data $data)
+    public function destroy(Airtime $airtime)
     {
         //
     }
-   
 
 }

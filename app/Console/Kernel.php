@@ -5,6 +5,9 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Jobs\ProcessAirtime;
+use App\Jobs\ProcessData;
+use App\Console\Commands\ProcessDataJob;
+use App\Console\Commands\ProcessAirtimeJob;
 
 class Kernel extends ConsoleKernel
 {
@@ -18,6 +21,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         // $schedule->job(new ProcessAirtime)->everyMinute();
+        // $schedule->job(new ProcessData)->everyMinute();
+        $schedule->command('process-airtime:run')->everyMinute();
+        $schedule->command('process-data:run')->everyMinute();
+     
     }
 
     /**
