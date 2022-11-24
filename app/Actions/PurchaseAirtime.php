@@ -39,6 +39,8 @@ class PurchaseAirtime
               CURLOPT_FOLLOWLOCATION => true,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_SSL_VERIFYHOST =>false,
+                CURLOPT_SSL_VERIFYPEER =>false,
               CURLOPT_POSTFIELDS =>$payload,
               CURLOPT_HTTPHEADER => array(
                 'Authorization: ' . env('MCD_PAYMENT_KEY'). '',
