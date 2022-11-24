@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Data;
 use App\Actions\PurchaseData;
+use Illuminate\Support\Facades\Log;
 
 class ProcessData implements ShouldQueue
 {
@@ -32,7 +33,10 @@ class ProcessData implements ShouldQueue
      */
     public function handle(Data $data, PurchaseData $purchaseData)
     {
-        $data  = $data->successfulDataPayment($this->paymentId);
+        Log::info("processing data");
+        $data  = $data->getSuccessfulDataPaymentAttribute($this->paymentId);
+        echo $data;
         $response = $purchaseData->buyData($data);
+        echo $response;
     }
 }

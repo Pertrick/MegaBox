@@ -5,6 +5,7 @@ use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Jobs\ProcessAirtime;
 use App\Jobs\ProcessData;
+use Illuminate\Support\Facades\Log;
 
 class PaymentAction
 {
@@ -76,18 +77,27 @@ class PaymentAction
         curl_close($curl);
         $rep = json_decode($response, true);
 
-        if ($rep['status'] == true) {
-            $payment = Payment::where('reference_id', $rep['data']['reference']);
-            if ($payment->pluck('status')->first() == "success") {
+        Log::info("verifyPayment rep");
+        Log::info($rep);
+
+        if ($rep['status']) {
+        if ($rep['data']['status'] == "success") {
+            Log::info("verify status is true");
+            $payment = Payment::where('reference_id', $rep['data']['reference'])->first();
+            $payment->status="success";
+            $payment->save();
+//            if ($payment->pluck('status')->first() == "success") {
+                Log::info("payment success");
                 if($payment->service == Payment::AIRTIME){
                     ProcessAirtime::dispatch($payment->id);
                 }elseif($payment->service == Payment::DATA){
                     ProcessData::dispatch($payment->id);
                 }
-                
+
                 return true;
-            }
+//            }
             return false;
+        }
         }
 
     }

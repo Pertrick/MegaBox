@@ -25,7 +25,7 @@ Route::get('/', function () {
 Route::get('/download', function () {
     $file = public_path()."/DATATEMPLATE.csv";
 
-    $name = "datatemplat.csv";
+    $name = "data_template.csv";
 
     $headers = array(
         'Content-Type => application/csv'
@@ -37,13 +37,13 @@ Route::get('/download', function () {
 Route::get('/downloadairtime', function () {
     $file = public_path()."/AIRTIMETEMPLATE.csv";
 
-    $name = "airtimetemplate.csv";
+    $name = "airtime_template.csv";
 
     $headers = array(
         'Content-Type => application/csv'
     );
      return response()->download($file, $name, $headers);
-     
+
 })->name('downloadairtime');
 
 //for airtime
