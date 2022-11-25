@@ -21,9 +21,6 @@ class PurchaseData
                  "phone": "'.$phone_number.'"
             }';
 
-            Log::info("data purchase payload");
-            Log::info($payload);
-
             echo $payload;
 
             $curl = curl_init();
@@ -48,9 +45,6 @@ class PurchaseData
 
             $response = curl_exec($curl);
             curl_close($curl);
-
-            Log::info("data purchase response");
-            Log::info($response);
 
             echo $response;
 

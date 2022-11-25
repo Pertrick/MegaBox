@@ -77,29 +77,19 @@ class PaymentAction
         curl_close($curl);
         $rep = json_decode($response, true);
 
-        Log::info("verifyPayment rep");
-        Log::info($rep);
-
-        if ($rep['status']) {
-        if ($rep['data']['status'] == "success") {
-            Log::info("verify status is true");
+        if ($rep['status'] && $rep['data']['status'] == "success") {
             $payment = Payment::where('reference_id', $rep['data']['reference'])->first();
-            $payment->status="success";
-            $payment->save();
-//            if ($payment->pluck('status')->first() == "success") {
-                Log::info("payment success");
+            $payment->status= Payment::SUCCESS;
+           if ($payment->save()){
                 if($payment->service == Payment::AIRTIME){
                     ProcessAirtime::dispatch($payment->id);
                 }elseif($payment->service == Payment::DATA){
                     ProcessData::dispatch($payment->id);
                 }
-
                 return true;
-//            }
+           }
             return false;
         }
-        }
-
     }
 
 }
