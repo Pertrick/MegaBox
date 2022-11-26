@@ -26,7 +26,7 @@ class PurchaseData
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://test.mcd.5starcompany.com.ng/api/reseller/pay',
+              CURLOPT_URL => env('MCD_PAY_URL'),
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => '',
               CURLOPT_MAXREDIRS => 10,
@@ -56,7 +56,6 @@ class PurchaseData
                $data->status = Data::SENT;
                $data->sent_at = Carbon::now();
                $data->save();
-                Log::info("Data status updated");
             }
         }
 

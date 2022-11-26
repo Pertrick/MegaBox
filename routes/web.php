@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\AirtimeController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ServiceController;
-
+use App\Http\Controllers\DownloadController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,51 +21,12 @@ Route::get('/', function () {
 })->name('home');
 //for downloading sample file
 
-Route::get('/download', function () {
-    $file = public_path()."/DATATEMPLATE.csv";
-
-    $name = "data_template.csv";
-
-    $headers = array(
-        'Content-Type => application/csv'
-    );
-     return response()->download($file, $name, $headers);
-
-})->name('download');
-
-Route::get('/downloadairtime', function () {
-    $file = public_path()."/AIRTIMETEMPLATE.csv";
-
-    $name = "airtime_template.csv";
-
-    $headers = array(
-        'Content-Type => application/csv'
-    );
-     return response()->download($file, $name, $headers);
-
-})->name('downloadairtime');
-
-//for airtime
-// Route::get('airtime', function (){
-// return view('airtime.index');
-// })->name('airtime');
-
-//for success page
-
-Route::get('sucess', function (){
-return view('successpage');
-})->name('sucess');
-
-
-// Route::any('prev', [AirtimeController::class, 'test'])->name('prev');
-
-// Route::post('data/store', [DataController::class, 'store'])->name('data.store');
+Route::get('/download_data', [DownloadController::class, 'downloadData'])->name('download.data');
+Route::get('/download_airtime', [DownloadController::class, 'downloadAirtime'])->name('download.airtime');
 
 //payment
 Route::post('payment/checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
-
 Route::get('/verify', [PaymentController::class, 'verifyPayment'])->name('payment.verify');
-
 Route::get('/payment_confirmation/{id}', [PaymentController::class, 'redirectPage'])->name('redirectpage');
 
 Route::get('/dashboard', function () {

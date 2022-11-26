@@ -38,7 +38,7 @@
                     </div>
                 </div><br><br><br>
 
-                <a href="{{ url('downloadairtime') }}" class="btn btn-outline-warning">DOWNLOAD SAMPLE CSV FILE</a>
+                <a href="{{route('download.airtime') }}" class="btn btn-outline-warning">DOWNLOAD AIRTIME SAMPLE CSV FILE</a>
 
             </div>
         </div>
