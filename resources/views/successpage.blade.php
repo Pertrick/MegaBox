@@ -55,7 +55,7 @@
                <div class="check"><i class="fa fa-check" aria-hidden="true"></i></div>
             </div>
             <div class="content">
-               <h2 class="pt-5">Payment Success !</h2>
+               <h2 class="pt-5">Payment Successful !</h2>
                <h5>Email: <span class="font-weight-bold">{{$payment->email}}</span></h5>
                <h5>Reference Id: <span class="font-weight-bold">{{$payment->reference_id}}</span></h5>
                <h5>Service: <span class="font-weight-bold">Bulk {{$payment->service}} </span></h5>

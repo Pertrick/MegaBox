@@ -6,7 +6,7 @@
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo-img">
                                 <a href="/">
-                                    <img src="hostza-master/img/logo.png" alt="">
+                                    <img src="hostza-master/img/logo.jpg" alt="">
                                 </a>
                             </div> 
                         </div>
