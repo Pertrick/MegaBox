@@ -20,27 +20,10 @@ class PaymentController extends Controller
         $referenceId =  $request->query('reference');
         $verifyPayment = $payment->verify($request);
 
-        Log::info("verifyPayment referenceId");
-        Log::info($referenceId);
-        Log::info("verifyPayment");
-        Log::info($verifyPayment);
-
-        if($verifyPayment){
-            return redirect()->route('redirectpage', $referenceId);
-        }else{
-            return redirect()->route('redirectpage', $referenceId);
-        }
-
-    }
-
-    public function redirectPage($referenceId){
-
         $payment = Payment::where('reference_id', $referenceId)->first();
-
-        return view('successpage', compact('payment'));
+        if(!$verifyPayment){
+            return view('failedpage', compact('payment'));
+        }
+            return view('successpage', compact('payment'));
     }
-
-
-
-
 }

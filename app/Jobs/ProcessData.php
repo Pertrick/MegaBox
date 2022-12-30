@@ -33,7 +33,7 @@ class ProcessData implements ShouldQueue
      */
     public function handle(Data $data, PurchaseData $purchaseData)
     {
-        Log::info("processing data");
+        //Log::info("processing data");
         $data  = $data->getSuccessfulDataPaymentAttribute($this->paymentId);
         echo $data;
         $response = $purchaseData->buyData($data);

@@ -39,7 +39,7 @@
                     </div>
                 </div><br><br>
 
-                <a href="{{ url('download') }}" class="btn btn-outline-warning">DOWNLOAD SAMPLE CSV FILE</a>
+                <a href="{{ route('download.data') }}" class="btn btn-outline-warning">DOWNLOAD DATA SAMPLE CSV FILE</a>
 
             </div>
         </div>

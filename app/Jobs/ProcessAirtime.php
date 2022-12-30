@@ -34,10 +34,10 @@ class ProcessAirtime implements ShouldQueue
      */
     public function handle(Airtime $airtime,PurchaseAirtime $purchaseAirtime)
     {
-        Log::info("processing airtime");
+        //Log::info("processing airtime");
         $airtimes = $airtime->getSuccessfulAirtimePaymentIdAttribute($this->paymentId);
         echo $airtimes;
-        Log::info("airtime Processing");
+        //Log::info("airtime Processing");
         $response = $purchaseAirtime->buyAirtime($airtimes);
         echo $response;
     }

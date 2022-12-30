@@ -14,7 +14,7 @@
 	}
    .payment_header
    {
-	   background:#198754;
+	   background:#DC3545;
 	   padding:20px;
        border-radius:20px 20px 0px 0px;
 	   
@@ -52,10 +52,10 @@
       <div class="col-md-6 mx-auto mt-5">
          <div class="payment">
             <div class="payment_header">
-               <div class="check"><i class="fa fa-check" aria-hidden="true"></i></div>
+               <div class="check"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></div>
             </div>
             <div class="content">
-               <h2 class="pt-5">Payment Successful !</h2>
+               <h2 class="pt-5">Payment Failed !</h2>
                <h5>Email: <span class="font-weight-bold">{{$payment->email}}</span></h5>
                <h5>Reference Id: <span class="font-weight-bold">{{$payment->reference_id}}</span></h5>
                <h5>Service: <span class="font-weight-bold">Bulk {{$payment->service}} </span></h5>

@@ -21,15 +21,12 @@ class PurchaseData
                  "phone": "'.$phone_number.'"
             }';
 
-            Log::info("data purchase payload");
-            Log::info($payload);
-
             echo $payload;
 
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://test.mcd.5starcompany.com.ng/api/reseller/pay',
+              CURLOPT_URL => env('MCD_PAY_URL'),
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => '',
               CURLOPT_MAXREDIRS => 10,
@@ -49,9 +46,6 @@ class PurchaseData
             $response = curl_exec($curl);
             curl_close($curl);
 
-            Log::info("data purchase response");
-            Log::info($response);
-
             echo $response;
 
 
@@ -62,7 +56,6 @@ class PurchaseData
                $data->status = Data::SENT;
                $data->sent_at = Carbon::now();
                $data->save();
-                Log::info("Data status updated");
             }
         }
 

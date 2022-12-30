@@ -23,15 +23,12 @@ class PurchaseAirtime
                 "amount": "' . $amount .'"
             }';
 
-            Log::info("airtime purchase payload");
-            Log::info($payload);
-
             echo $payload;
 
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://test.mcd.5starcompany.com.ng/api/reseller/pay',
+              CURLOPT_URL => env('MCD_PAY_URL'),
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => '',
               CURLOPT_MAXREDIRS => 10,
@@ -51,9 +48,6 @@ class PurchaseAirtime
             $response = curl_exec($curl);
             curl_close($curl);
 
-            Log::info("airtime purchase response");
-            Log::info($response);
-
             echo $response;
 
             $response = json_decode($response, true);
@@ -63,7 +57,6 @@ class PurchaseAirtime
                $airtime->status = Airtime::SENT;
                $airtime->sent_at = Carbon::now();
                $airtime->save();
-                Log::info("Airtime status updated");
             }
         }
 
