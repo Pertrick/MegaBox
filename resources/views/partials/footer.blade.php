@@ -8,25 +8,25 @@
                                 Contact us
                             </h3>
                            
-                            <p class="footer_text doanar"> <a class="first" href="https://wa.me/+2347011223737">+2347011223737
+                            <p class="footer_text doanar"> <a class="first" href="https://wa.me/+2347011223737" target="_blank">+2347011223737
                                 </a> <br>
-                                <a href="#">info@5starcompany.com.ng</a></p>
+                                <a href="mailto:info@5starcompany.com.ng">info@5starcompany.com.ng</a></p>
                             <div class="socail_links">
                                 <ul>
                                     <li>
-                                        <a href="https://facebook.com/5starcompany">
+                                        <a href="https://facebook.com/5starcompany" target="_blank">
                                             <i class="fa fa-facebook-square"></i>
                                         </a>
                                     </li>
-                                    //<li>
-                                      //  <a href="#">
-                                       //     <i class="fa fa-twitter"></i>
-                                        //</a>
-                                    //</li>
-                                    //<li>
-                                      //  <a href="#">
-                                       //     <i class="fa fa-instagram"></i>
-                                        //</a>
+                                    <li>
+                                        <a href="#">
+                                           <i class="fa fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-instagram"></i>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
