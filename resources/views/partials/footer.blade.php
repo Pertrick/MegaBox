@@ -8,25 +8,25 @@
                                 Contact us
                             </h3>
                            
-                            <p class="footer_text doanar"> <a class="first" href="#">+10 783 467 3789
+                            <p class="footer_text doanar"> <a class="first" href="https://wa.me/+2347011223737">+2347011223737
                                 </a> <br>
-                                <a href="#">megabulkservice@support.com</a></p>
+                                <a href="#">info@5starcompany.com.ng</a></p>
                             <div class="socail_links">
                                 <ul>
                                     <li>
-                                        <a href="#">
+                                        <a href="https://facebook.com/5starcompany">
                                             <i class="fa fa-facebook-square"></i>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-instagram"></i>
-                                        </a>
+                                    //<li>
+                                      //  <a href="#">
+                                       //     <i class="fa fa-twitter"></i>
+                                        //</a>
+                                    //</li>
+                                    //<li>
+                                      //  <a href="#">
+                                       //     <i class="fa fa-instagram"></i>
+                                        //</a>
                                     </li>
                                 </ul>
                             </div>
